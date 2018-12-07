@@ -1,13 +1,14 @@
 package com.digou.controller;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,21 +27,26 @@ public class UserController {
     @Resource
     private UserService userService;
     
-    @RequestMapping("/")  
+    @RequestMapping("/api/hello")  
     public String root(){  
         return "hello";
     } 
     
-     @RequestMapping("/say")  
-     public String say(){  
-         return "say nihao";
-     }  
+    @RequestMapping("/say")  
+    public String say(HttpServletResponse response){  
+//    	System.out.println(response);
+//    	Cookie cookie = new Cookie("qwer", "1234");
+//    	cookie.setDomain("localhost");
+//    	cookie.setPath("/");
+//    	cookie.setMaxAge(121212);
+//    	response.addCookie(cookie);
+        return "say nihao";
+    }  
     
     @RequestMapping("/find")
     public String find(){
         User user =  userService.find(18);
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("user","sadf");
+        System.out.println("$$$$$$$$$$$$$" + user);
         return "HelloWord"+"fasdf--"+user.getUsername()+"--"+user.getPassword();
     }
     

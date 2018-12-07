@@ -7,8 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.digou.entity.User;
-import com.digou.mapper.UserMapper;
+import com.digou.entity.*;
+import com.digou.mapper.*;
 
 
 @ComponentScan({"com.digou.mapper"})

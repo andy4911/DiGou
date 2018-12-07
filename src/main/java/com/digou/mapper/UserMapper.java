@@ -2,7 +2,7 @@ package com.digou.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.digou.entity.User;
+import com.digou.entity.*;
 
 @Mapper
 public interface UserMapper {
