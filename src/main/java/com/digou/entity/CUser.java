@@ -10,4 +10,5 @@ public class CUser extends BaseEntity {
     public String password;
     public boolean isOnline;
     public String cookie;
+    public String portraitURL;
 }

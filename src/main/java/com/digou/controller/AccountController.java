@@ -29,12 +29,34 @@ import com.digou.common.*;;
 public class AccountController {
     
     @Resource
-    private AccountService loginService;
+    private AccountService accountService;
+    
+    @RequestMapping("/api/c/logup")  
+    public Map<String, Object> logup(HttpServletResponse response, 
+            @RequestParam(value = "username",required = true) String username,
+            @RequestParam(value = "password",required = true) String password) { 
+    	if (!isllegal(username, password)) {
+			return ResponseCommon.wrappedResponse(null, 105, null);
+		}
+        return accountService.logup(response, username, password);
+    } 
     
     @RequestMapping("/api/c/login")  
     public Map<String, Object> login(HttpServletResponse response, 
             @RequestParam(value = "username",required = true) String username,
             @RequestParam(value = "password",required = true) String password) { 
-        return loginService.loginCheck(response, username, password);
+    	if (!isllegal(username, password)) {
+			return ResponseCommon.wrappedResponse(null, 105, null);
+		}
+        return accountService.loginCheck(response, username, password);
     } 
+    
+    static boolean isllegal(String username, String password) {
+    	//用户名密码判断逻辑
+    	//以后补充
+    	if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+			return false;
+		}
+    	return true;
+    }
 }

@@ -18,15 +18,36 @@ import com.digou.mapper.*;
 import com.digou.common.*;
 
 @ComponentScan({"com.digou.mapper"})
-@Service("loginService")
+@Service("accountService")
 public class AccountService implements AccountIService {
 	
     @Resource
-    private AccountMapper loginMapper;
+    private AccountMapper accountMapper;
+    
+    @Override
+	public Map<String, Object> logup(HttpServletResponse response, String username, String password) {
+    	CUser account = accountMapper.findCUser(username);
+    	if (account != null) {
+    		//用户名已存在
+    		return ResponseCommon.wrappedResponse(null, 102, null);
+		}
+    	CUser newAccount = new CUser();
+    	newAccount.username = username;
+    	newAccount.password = password;
+    	newAccount.isOnline = true;
+    	int result = accountMapper.insertCUser(newAccount);
+    	if (result != 1) {
+			return ResponseCommon.wrappedResponse(null, 106, null);
+		}
+    	int userID = newAccount.userID;
+    	Map<String, Object> data = new HashMap<String, Object>();
+    	data.put("userID", userID);
+    	return ResponseCommon.wrappedResponse(data, 101, null);
+    }
 	
     @Override
 	public Map<String, Object> loginCheck(HttpServletResponse response, String username, String password) {
-		CUser account = loginMapper.findCUser(username);
+		CUser account = accountMapper.findCUser(username);
 		
 		AccountCheckEnum code;
 		if(account == null) {
@@ -39,7 +60,7 @@ public class AccountService implements AccountIService {
 			account.isOnline = true;
 			code = AccountCheckEnum.SUCCESS;
 		}
-		loginMapper.updateCUser(account);
+		accountMapper.updateCUser(account);
 		
 		this.addCookie(response, username);
 		

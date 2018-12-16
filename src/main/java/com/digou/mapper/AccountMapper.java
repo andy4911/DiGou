@@ -9,4 +9,5 @@ public interface AccountMapper {
 	
 	public CUser findCUser(String username);
 	public void updateCUser(CUser account);
+	public int insertCUser(CUser account);
 }
