@@ -31,6 +31,14 @@ public class AccountController {
     @Resource
     private AccountService accountService;
     
+    @RequestMapping("/api/c/completeUserInfo")  
+    public Map<String, Object> completeUserInfo(HttpServletResponse response, 
+            @RequestParam(value = "userID",required = true) int userID,
+            @RequestParam(value = "nickname",required = false) String nickname,
+            @RequestParam(value = "portraitURL",required = false) String portraitURL) {
+    	return accountService.completeUserInfo(response, userID, nickname, portraitURL);
+    }
+    
     @RequestMapping("/api/c/logup")  
     public Map<String, Object> logup(HttpServletResponse response, 
             @RequestParam(value = "username",required = true) String username,

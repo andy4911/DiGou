@@ -13,11 +13,16 @@
 	</insert>
     
     <update id="updateCUser" parameterType="com.digou.entity.CUser">
-        UPDATE CUser SET username=#{username}, password=#{password}, nickname = #{nickname}, cookie = #{cookie}, isOnline = #{isOnline} WHERE userID=#{userID}
+        UPDATE CUser SET username=#{username}, password=#{password}, nickname = #{nickname}, cookie = #{cookie}, 
+        isOnline = #{isOnline}, portraitURL=#{portraitURL} WHERE userID=#{userID}
     </update>
     
     <select id="findCUser" parameterType="String" resultType="com.digou.entity.CUser">
         SELECT * FROM CUser WHERE username=#{0}
+    </select>
+    
+    <select id="findCUserByID" parameterType="int" resultType="com.digou.entity.CUser">
+        SELECT * FROM CUser WHERE userID=#{0}
     </select>
     
 	<!-- bUser -->

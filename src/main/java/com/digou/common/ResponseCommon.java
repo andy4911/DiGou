@@ -25,7 +25,8 @@ public class ResponseCommon {
 	        while(it.hasNext()) {
 	        	String condition = (String)it.next();
 	        	Field field = entity.getClass().getDeclaredField(condition);
-	        	data.put(condition, field.get(entity));
+	        	Object o = field.get(entity);
+		        data.put(condition, field.get(entity));
 	        }
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -63,6 +64,12 @@ public class ResponseCommon {
 //	}
 	
 	static public Map<String, Object> wrappedResponse(Map<String, Object> data, int code, Map<String, Object> map) {
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("code", code);
+		if (data == null && map == null) {
+			return response;
+		}
+		
 		if (map != null) {
 			Iterator<String> it = map.keySet().iterator();
 			while(it.hasNext()) {
@@ -70,9 +77,6 @@ public class ResponseCommon {
 				data.put(key, map.get(key));
 			}
 		}
-		
-		Map<String, Object> response = new HashMap<String, Object>();
-		response.put("code", code);
 		response.put("data", data);
 		return response;
 	}

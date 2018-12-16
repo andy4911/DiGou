@@ -25,6 +25,22 @@ public class AccountService implements AccountIService {
     private AccountMapper accountMapper;
     
     @Override
+	public Map<String, Object> completeUserInfo(HttpServletResponse response, int userID, String nickname, String portraitURL) {
+    	CUser user = accountMapper.findCUserByID(userID);
+    	if (user == null) {
+			return ResponseCommon.wrappedResponse(null, 102, null);
+		}
+    	if (nickname.length() > 0) {
+        	user.nickname = nickname;
+		}
+    	if (portraitURL.length() > 0) {
+        	user.portraitURL = portraitURL;
+		}
+    	accountMapper.updateCUser(user);
+    	return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+    
+    @Override
 	public Map<String, Object> logup(HttpServletResponse response, String username, String password) {
     	CUser account = accountMapper.findCUser(username);
     	if (account != null) {
@@ -54,19 +70,21 @@ public class AccountService implements AccountIService {
 			code = AccountCheckEnum.USERNAME_ERROR;
 		} else if(!account.password.equals(password)) {
 			code = AccountCheckEnum.PASSWORD_ERROR;
+			account = null;
 		} else if (account.isOnline) {
 			code = AccountCheckEnum.IS_ONLINE;
+			account = null;
 		} else {
 			account.isOnline = true;
 			code = AccountCheckEnum.SUCCESS;
+			accountMapper.updateCUser(account);
+			this.addCookie(response, username);
 		}
-		accountMapper.updateCUser(account);
-		
-		this.addCookie(response, username);
 		
 		ArrayList<String> conditionArr = new ArrayList<String>();
 		conditionArr.add("nickname");
 		conditionArr.add("userID");
+		conditionArr.add("portraitURL");
 		Map<String, Object> data = ResponseCommon.filter(account, conditionArr);
 		return ResponseCommon.wrappedResponse(data, code.value(), null);
 //		Map<String, Object> data = new HashMap<String, Object>();
