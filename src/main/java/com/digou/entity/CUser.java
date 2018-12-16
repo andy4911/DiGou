@@ -2,7 +2,7 @@ package com.digou.entity;
 
 
 
-public class Account extends BaseEntity {
+public class CUser extends BaseEntity {
 	
     public int userID;
     public String username;

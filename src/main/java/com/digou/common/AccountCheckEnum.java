@@ -1,11 +1,11 @@
 package com.digou.common;
 
-public enum LoginCheckEnum {
+public enum AccountCheckEnum {
     SUCCESS(101), USERNAME_ERROR(102), PASSWORD_ERROR(103), IS_ONLINE(104);
 	
 	private int value = 0;
 	
-	private LoginCheckEnum(int value) { 
+	private AccountCheckEnum(int value) { 
         this.value = value;
     }
 	
@@ -13,7 +13,7 @@ public enum LoginCheckEnum {
         return this.value;
     }
 	
-	public static LoginCheckEnum valueOf(int value) {
+	public static AccountCheckEnum valueOf(int value) {
         switch (value) {
         case 101:
             return SUCCESS;

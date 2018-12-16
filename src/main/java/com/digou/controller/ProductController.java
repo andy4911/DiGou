@@ -1,6 +1,7 @@
 package com.digou.controller;
 
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -26,16 +27,16 @@ import com.digou.common.*;;
 @RestController
 @ComponentScan({"com.digou.service"})
 @MapperScan("com.digou.mapper")
-public class LoginController {
+public class ProductController {
     
     @Resource
-    private LoginService loginService;
+    private ProductService productService;
     
-    @RequestMapping("/api/login")  
-    public Map<String, Object> login(HttpServletResponse response, 
-            @RequestParam(value = "username",required = true) String username,
-            @RequestParam(value = "password",required = true) String password) {  
-
-        return loginService.loginCheck(response, username, password);
+    @RequestMapping("/api/c/searchproducts")  
+    public Map<String, Object> searchProducts(HttpServletResponse response, 
+            @RequestParam(value = "pName",required = false) String pName,
+            @RequestParam(value = "pageIndex",required = true) int pageIndex,
+            @RequestParam(value = "pageSize",required = false) int pageSize) {
+    	return productService.searchProducts(response, pName, pageIndex, pageSize);
     } 
 }

@@ -1,14 +1,13 @@
 package com.digou.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-
-import com.digou.service.UserIService;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
@@ -20,37 +19,42 @@ import com.digou.common.*;
 
 @ComponentScan({"com.digou.mapper"})
 @Service("loginService")
-public class LoginService implements LoginIService {
+public class AccountService implements AccountIService {
 	
     @Resource
-    private LoginMapper loginMapper;
+    private AccountMapper loginMapper;
 	
     @Override
 	public Map<String, Object> loginCheck(HttpServletResponse response, String username, String password) {
-		Account account = loginMapper.find(username);
+		CUser account = loginMapper.findCUser(username);
 		
-		LoginCheckEnum code;
+		AccountCheckEnum code;
 		if(account == null) {
-			code = LoginCheckEnum.USERNAME_ERROR;
+			code = AccountCheckEnum.USERNAME_ERROR;
 		} else if(!account.password.equals(password)) {
-			code = LoginCheckEnum.PASSWORD_ERROR;
+			code = AccountCheckEnum.PASSWORD_ERROR;
 		} else if (account.isOnline) {
-			code = LoginCheckEnum.IS_ONLINE;
+			code = AccountCheckEnum.IS_ONLINE;
 		} else {
 			account.isOnline = true;
-			code = LoginCheckEnum.SUCCESS;
+			code = AccountCheckEnum.SUCCESS;
 		}
-		loginMapper.update(account);
+		loginMapper.updateCUser(account);
 		
 		this.addCookie(response, username);
 		
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("nickname", account.nickname);
-		data.put("userID", account.userID);
-		Map<String, Object> resp = new HashMap<String, Object>();
-		resp.put("code", code.value());
-		resp.put("data", data);
-		return resp;
+		ArrayList<String> conditionArr = new ArrayList<String>();
+		conditionArr.add("nickname");
+		conditionArr.add("userID");
+		Map<String, Object> data = ResponseCommon.filter(account, conditionArr);
+		return ResponseCommon.wrappedResponse(data, code.value(), null);
+//		Map<String, Object> data = new HashMap<String, Object>();
+//		data.put("nickname", account.nickname);
+//		data.put("userID", account.userID);
+//		Map<String, Object> resp = new HashMap<String, Object>();
+//		resp.put("code", code.value());
+//		resp.put("data", data);
+//		return resp;
 	}
     
     private void addCookie(HttpServletResponse response, String username) {

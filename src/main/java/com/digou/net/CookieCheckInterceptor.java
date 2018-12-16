@@ -21,6 +21,7 @@ public class CookieCheckInterceptor implements HandlerInterceptor {
 	
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+    	
     	Cookie[] cookies = request.getCookies();
     	if(cookies == null || cookies.length == 0) {
         	Map<String, Object> objc = new HashMap<String, Object>();

@@ -14,11 +14,12 @@ public class MyWebConfig extends WebMvcConfigurationSupport {
                 "/api/**"
         };
 
-        //不需要拦截的
+        //cookie拦截器不需要拦截的
         String[] excludePathPatterns = {
-                "/api/login",
-                "/api/register",
+                "/api/**/login",
+                "/api/**/logup",
         };
+        registry.addInterceptor(new HeaderInterceptor()).addPathPatterns(pathPatterns);
         registry.addInterceptor(new CookieCheckInterceptor()).addPathPatterns(pathPatterns).excludePathPatterns(excludePathPatterns);
 	}
 }
