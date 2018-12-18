@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!-- 指定工作空间，要与接口名相同，源代码没有去看，猜测应该是通过"这里的namespace.下边方法的id"来定位方法的 -->  
+<mapper namespace="com.digou.mapper.ShopcartMapper">  
+    
+    <select id="find" resultType="java.util.Map">
+        SELECT * FROM Shopcart WHERE 1=1
+        <if test='cID != null'> 
+        	AND cID=#{cID} 
+        </if>
+		<if test='pID != null'> 
+        	AND pID=#{pID} 
+        </if>
+    </select>
+    
+	<insert id="insert">
+        INSERT INTO Shopcart(cID, pID, createTime) 
+		VALUE (#{cID}, #{pID}, #{createTime})   
+    </insert>
+    
+    <select id="findProductsInCart" resultType="com.digou.entity.Product">
+    	SELECT * FROM Product WHERE pID IN (SELECT pID FROM Shopcart WHERE cID=#{cID})
+    </select>
+</mapper>

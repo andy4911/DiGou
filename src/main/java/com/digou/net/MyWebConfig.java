@@ -20,6 +20,6 @@ public class MyWebConfig extends WebMvcConfigurationSupport {
                 "/api/**/logup",
         };
         registry.addInterceptor(new HeaderInterceptor()).addPathPatterns(pathPatterns);
-        registry.addInterceptor(new CookieCheckInterceptor()).addPathPatterns(pathPatterns).excludePathPatterns(excludePathPatterns);
+//        registry.addInterceptor(new CookieCheckInterceptor()).addPathPatterns(pathPatterns).excludePathPatterns(excludePathPatterns);
 	}
 }

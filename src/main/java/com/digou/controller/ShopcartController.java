@@ -22,21 +22,35 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.digou.service.*;
-import com.digou.common.*;;
+import com.digou.common.*;
+import com.digou.entity.Product;;
 
 @RestController
 @ComponentScan({"com.digou.service"})
 @MapperScan("com.digou.mapper")
-public class ProductController {
+public class ShopcartController {
     
     @Resource
-    private ProductService productService;
+    private ShopcartService shopcartService;
     
-    @RequestMapping("/api/c/searchproducts")  
-    public Map<String, Object> searchProducts(HttpServletResponse response, 
-            @RequestParam(value = "pName", required = false) String pName,
-            @RequestParam(value = "pageIndex", required = true) int pageIndex,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
-    	return productService.searchProducts(response, pName, pageIndex, pageSize);
+    @RequestMapping("/api/c/addToCart")  
+    public Map<String, Object> addToShopcart(HttpServletResponse response, 
+            @RequestParam(value = "cID",required = true) int cID,
+            @RequestParam(value = "pID",required = true) int pID) {
+    	return shopcartService.addToCard(cID, pID);
     } 
+    
+    @RequestMapping("api/c/lookupCart")  
+    public Map<String, Object> lookupShopcart(HttpServletResponse response, 
+            @RequestParam(value = "cID",required = true) int cID) {
+    	return shopcartService.lookupCard(cID);
+    }
+    
+    @RequestMapping("api/c/test")  
+    public ArrayList<Product> test(HttpServletResponse response, 
+            @RequestParam(value = "cID",required = false) Integer cID, 
+            @RequestParam(value = "pID",required = false) Integer pID) {
+    	return shopcartService.test(cID);
+    }
+    
 }
