@@ -6,7 +6,7 @@
 	<groupId>com.digou</groupId>
 	<artifactId>DiGou</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>DiGou</name>
 	<description>Project for Spring Boot</description>
@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.9</java.version>
 	</properties>
 
 	<dependencies>
@@ -33,10 +33,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+        		<exclusion>
+            		<groupId>org.springframework.boot</groupId>
+            		<artifactId>spring-boot-starter-tomcat</artifactId>
+        		</exclusion>
+    		</exclusions>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
@@ -64,14 +72,56 @@
       		<artifactId>fastjson</artifactId>
  		    <version>1.1.23</version>
 		</dependency>
+		
+		<!-- 部署添加 -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-tomcat</artifactId>
+   			<scope>provided</scope>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.tomcat.embed</groupId>
+    		<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
+		<dependency>
+     		<groupId>javax.servlet</groupId>
+     		<artifactId>javax.servlet-api</artifactId>
+     		<version>3.1.0</version>
+     		<!-- provided表明该包只在编译和测试的时候用 -->
+     		<scope>provided</scope>
+		</dependency>
+		<dependency>
+     		<groupId>javax.servlet.jsp</groupId>
+     		<artifactId>jsp-api</artifactId>
+     		<version>2.2</version>
+     		<scope>provided</scope>
+		</dependency>
+		<dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-legacy</artifactId>
+       		<version>1.1.0.RELEASE</version>
+    	</dependency>
+		
+
 	</dependencies>
 
 	<build>
+		<finalName>DiGou</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>    
+                	<source>1.9</source>    
+                	<target>1.9</target>    
+            	</configuration>    
 			</plugin>
+			
+			<plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+
 		</plugins>
 	</build>
 
