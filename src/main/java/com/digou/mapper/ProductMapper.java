@@ -10,4 +10,5 @@ import com.digou.entity.*;
 public interface ProductMapper {
 	public ArrayList<Product> find(String pName, int origin, int length);
 	public ArrayList<Product> findAll(int origin, int length);
+	public Product findByID(int pID);
 }

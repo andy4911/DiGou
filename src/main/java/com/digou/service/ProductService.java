@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ProductService implements ProductIService {
 	
 	@Resource
-	ProductMapper mapper;
+	ProductMapper productMapper;
 	
 	@Override
 	public Map<String, Object> searchProducts(HttpServletResponse response, String pName, int pageIndex, int pageSize) {
@@ -34,9 +34,9 @@ public class ProductService implements ProductIService {
 		
 		ArrayList<Product> productArr = null;
 		if (pName == null || pName.equals("")) {
-			productArr = mapper.findAll(pageIndex * pageSize, pageSize);
+			productArr = productMapper.findAll(pageIndex * pageSize, pageSize);
 		} else {
-			productArr = mapper.find(pName, pageIndex * pageSize, pageSize);
+			productArr = productMapper.find(pName, pageIndex * pageSize, pageSize);
 		}
 		
 		ArrayList<String> conditionArr = new ArrayList<String>();

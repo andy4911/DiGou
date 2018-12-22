@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class CookieCheckInterceptor implements HandlerInterceptor {
 	
-    @Override
+//    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
     	
     	Cookie[] cookies = request.getCookies();
@@ -41,12 +41,12 @@ public class CookieCheckInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    @Override
+//    @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
     	System.out.println("^^^^^^^^post");
     }
 
-    @Override
+//    @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
     }
     
