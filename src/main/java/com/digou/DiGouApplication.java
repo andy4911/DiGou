@@ -16,11 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class DiGouApplication extends SpringBootServletInitializer {
 
-	@RequestMapping("/hello")
-    public String index() {
-        return "Hello World";
-    }
-	
 	@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(DiGouApplication.class);

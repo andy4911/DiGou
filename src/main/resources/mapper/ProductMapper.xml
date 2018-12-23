@@ -10,4 +10,8 @@
     <select id="findAll" resultType="com.digou.entity.Product">
         SELECT * FROM Product LIMIT #{origin},#{length}
     </select>
+    
+    <select id="findByID" resultType="com.digou.entity.Product">
+        SELECT * FROM Product WHERE pID=#{pID}
+    </select>
 </mapper>

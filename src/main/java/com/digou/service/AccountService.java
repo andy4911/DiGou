@@ -50,7 +50,7 @@ public class AccountService implements AccountIService {
     	CUser newAccount = new CUser();
     	newAccount.username = username;
     	newAccount.password = password;
-    	newAccount.isOnline = true;
+//    	newAccount.isOnline = true;
     	int result = accountMapper.insertCUser(newAccount);
     	if (result != 1) {
 			return ResponseCommon.wrappedResponse(null, 106, null);
@@ -71,11 +71,11 @@ public class AccountService implements AccountIService {
 		} else if(!account.password.equals(password)) {
 			code = AccountCheckEnum.PASSWORD_ERROR;
 			account = null;
-		} else if (account.isOnline) {
-			code = AccountCheckEnum.IS_ONLINE;
-			account = null;
+//		} else if (account.isOnline) {
+//			code = AccountCheckEnum.IS_ONLINE;
+//			account = null;
 		} else {
-			account.isOnline = true;
+//			account.isOnline = true;
 			code = AccountCheckEnum.SUCCESS;
 			accountMapper.updateCUser(account);
 			this.addCookie(response, username);
