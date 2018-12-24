@@ -30,7 +30,7 @@ public class OrderService implements OrderIService {
 		Product product = productMapper.findByID(pID);
 		if (product == null) {
 			return ResponseCommon.wrappedResponse(null, 102, null);
-		} else if (product.count == 0) {
+		} else if (product.num == 0) {
 			return ResponseCommon.wrappedResponse(null, 105, null);
 		}
 		
