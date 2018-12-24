@@ -4,6 +4,8 @@ import com.digou.entity.Product;
 import com.digou.entity.SellerUser;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
+
 @Mapper
 public interface SellerMapper {
 	
@@ -12,6 +14,7 @@ public interface SellerMapper {
 	SellerUser findUserById(int id);
 	void modifyUser(SellerUser user);
 	void addGood(Product good);
+	ArrayList<Product> allGood(int id);
 //	public CUser findCUserByID(int userID);
 //	public void updateCUser(CUser account);
 //	public int insertCUser(CUser account);

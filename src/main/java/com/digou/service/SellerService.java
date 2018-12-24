@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,6 +70,14 @@ public class SellerService {
 		System.out.println(num);
 		sellerMapper.addGood(product);
 		return ResponseCommon.wrappedResponse(null, 101, null);
+	}
+
+	public Map<String, Object> good_all(HttpServletResponse response, int id) {
+		//插入
+		ArrayList<Product> products = sellerMapper.allGood(id);
+		Map<String, Object> data = new HashMap<>();
+		data.put("array", products);
+		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 
 	public Map<String, Object> login(HttpServletResponse response, String telephone, String password) {

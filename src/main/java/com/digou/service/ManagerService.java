@@ -33,8 +33,20 @@ public class ManagerService {
         return ResponseCommon.wrappedResponse(data, 101, null);
     }
 
+	public Map<String, Object> sellerWhiteInfo(HttpServletResponse response, String value) {
+        ArrayList<SellerUser> sellerUsers = managerMapper.sellerWhiteInfo(value);
+        Map<String, Object> data = new HashMap<>();
+        data.put("array", sellerUsers);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+
 	public Map<String, Object> sellerBlackCancel(HttpServletResponse response, int id) {
         managerMapper.sellerBlackCancel(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+
+	public Map<String, Object> sellerWhiteBlock(HttpServletResponse response, int id) {
+        managerMapper.sellerWhiteBlock(id);
         return ResponseCommon.wrappedResponse(null, 101, null);
     }
 

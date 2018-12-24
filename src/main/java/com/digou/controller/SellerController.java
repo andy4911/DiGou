@@ -65,4 +65,10 @@ public class SellerController {
                                         @RequestParam(value = "num",required = true) int num) {
         return sellerService.good_add(response, id, url, goodName, price, description, num);
     }
+
+    @RequestMapping("/api/b/good/all")
+    public Map<String, Object> good_all(HttpServletResponse response,
+                                        @RequestParam(value = "id",required = true) int id) {
+        return sellerService.good_all(response, id);
+    }
 }

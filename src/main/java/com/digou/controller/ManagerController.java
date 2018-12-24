@@ -28,15 +28,22 @@ public class ManagerController {
         return managerService.sellerBlackInfo(response);
     }
 
+    @RequestMapping("/api/m/seller_white_info")
+    public Map<String, Object> sellerWhiteInfo(HttpServletResponse response,
+                                               @RequestParam(value = "value",required = true) String value) {
+        return managerService.sellerWhiteInfo(response, value);
+    }
+
     @RequestMapping("/api/m/seller_black_cancel")
     public Map<String, Object> sellerBlackCancel(HttpServletResponse response,
                                                  @RequestParam(value = "id",required = true) int id) {
         return managerService.sellerBlackCancel(response, id);
     }
 
-    @RequestMapping("/api/m/seller_white_info")
-    public Map<String, Object> sellerWhiteInfo(HttpServletResponse response) {
-        return managerService.sellerWhiteInfo(response);
+    @RequestMapping("/api/m/seller_white_block")
+    public Map<String, Object> sellerWhiteBlock(HttpServletResponse response,
+                                                 @RequestParam(value = "id",required = true) int id) {
+        return managerService.sellerWhiteBlock(response, id);
     }
 
     @RequestMapping("/api/m/seller_pass_approve")
