@@ -26,7 +26,6 @@ public class ProductService implements ProductIService {
 	@Resource
 	ProductMapper productMapper;
 	
-	@Override
 	public Map<String, Object> searchProducts(HttpServletResponse response, String pName, int pageIndex, int pageSize) {
     	if (pageSize == 0) {
 			pageSize = 20;
