@@ -45,7 +45,7 @@ public class AccountController {
     @RequestMapping("/api/c/logup")  
     public Map<String, Object> logup(HttpServletResponse response, 
             @RequestParam(value = "username",required = true) String username,
-            @RequestParam(value = "password",required = true) String password) { 
+            @RequestParam(value = "password",required = true) String password) {
     	if (!isllegal(username, password)) {
 			return ResponseCommon.wrappedResponse(null, 105, null);
 		}
@@ -55,7 +55,7 @@ public class AccountController {
     @RequestMapping("/api/c/login")  
     public Map<String, Object> login(HttpServletResponse response, 
             @RequestParam(value = "username",required = true) String username,
-            @RequestParam(value = "password",required = true) String password) { 
+            @RequestParam(value = "password",required = true) String password) {
     	if (!isllegal(username, password)) {
 			return ResponseCommon.wrappedResponse(null, 105, null);
 		}

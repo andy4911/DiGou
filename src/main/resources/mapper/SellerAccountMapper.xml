@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!-- 指定工作空间，要与接口名相同，源代码没有去看，猜测应该是通过"这里的namespace.下边方法的id"来定位方法的 -->  
+<mapper namespace="com.digou.mapper.SellerAccountMapper">
+
+    <!-- cUser -->
+	<insert id="insertUser" parameterType="com.digou.entity.SellerUser" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO Seller_User (url, telephone, shopName, nickname, description, major, password)
+		VALUE (#{url}, #{telephone}, #{shopName}, #{nickname}, #{description}, #{major}, #{password})
+	</insert>
+
+    <update id="modifyUser" parameterType="com.digou.entity.SellerUser">
+        UPDATE Seller_User SET url=#{url}, telephone=#{telephone}, shopName = #{shopName}, nickname = #{nickname},
+        description = #{description}, major=#{major} WHERE id=#{id}
+    </update>
+    <!--
+    <update id="updateCUser" parameterType="com.digou.entity.CUser">
+        UPDATE CUser SET username=#{username}, password=#{password}, nickname = #{nickname}, cookie = #{cookie}, 
+        isOnline = #{isOnline}, portraitURL=#{portraitURL} WHERE userID=#{userID}
+    </update>-->
+    
+    <select id="findUser" parameterType="String" resultType="com.digou.entity.SellerUser">
+        SELECT * FROM Seller_User WHERE telephone=#{0}
+    </select>
+
+    <select id="findUserById" parameterType="int" resultType="com.digou.entity.SellerUser">
+        SELECT * FROM Seller_User WHERE id=#{0}
+    </select>
+    
+	<!-- bUser -->
+	<!-- aUser -->
+    
+</mapper>
