@@ -10,7 +10,9 @@ public interface ManagerMapper {
 	
 	ArrayList<SellerUser> sellerPassInfo();
 	ArrayList<SellerUser> sellerBlackInfo();
+	ArrayList<SellerUser> sellerWhiteInfo(String value);
 	void sellerBlackCancel(int id);
+	void sellerWhiteBlock(int id);
 	void sellerUpdateApprove(int id);
 	void sellerUpdateReject(int id);
 //	int insertUser(SellerUser user);

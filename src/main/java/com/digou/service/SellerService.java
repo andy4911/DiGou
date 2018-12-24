@@ -1,22 +1,24 @@
 package com.digou.service;
 
 import com.digou.common.ResponseCommon;
+import com.digou.entity.Product;
 import com.digou.entity.SellerUser;
-import com.digou.mapper.SellerAccountMapper;
+import com.digou.mapper.SellerMapper;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @ComponentScan({"com.digou.mapper"})
-@Service("sellerAccountService")
-public class SellerAccountService{
+@Service("sellerService")
+public class SellerService {
 	
     @Resource
-    private SellerAccountMapper sellerAccountMapper;
+    private SellerMapper sellerMapper;
 
 	public Map<String, Object> register(HttpServletResponse response,
 										String url,
@@ -27,12 +29,12 @@ public class SellerAccountService{
 										String nickname,
 										String password) {
 		//检查
-    	if (sellerAccountMapper.findUser(telephone) != null) {
+    	if (sellerMapper.findUser(telephone) != null) {
     		return ResponseCommon.wrappedResponse(null, 102, null);
 		}
 		//插入
     	SellerUser user = new SellerUser(url, telephone, shopName, nickname, description, major, password);
-    	int result = sellerAccountMapper.insertUser(user);
+    	int result = sellerMapper.insertUser(user);
     	if (result != 1) {
 			return ResponseCommon.wrappedResponse(null, 106, null);
 		}
@@ -44,7 +46,7 @@ public class SellerAccountService{
 
 	public Map<String, Object> info_get(HttpServletResponse response, int id) {
 		//检查
-		SellerUser sellerUser = sellerAccountMapper.findUserById(id);
+		SellerUser sellerUser = sellerMapper.findUserById(id);
     	if (sellerUser == null) {
     		return ResponseCommon.wrappedResponse(null, 102, null);
 		} else {
@@ -58,12 +60,28 @@ public class SellerAccountService{
 		//插入
 		SellerUser user = new SellerUser(url, telephone, shopName, nickname, description, major, "");
 		user.setId(id);
-		sellerAccountMapper.modifyUser(user);
+		sellerMapper.modifyUser(user);
 		return ResponseCommon.wrappedResponse(null, 101, null);
 	}
 
+	public Map<String, Object> good_add(HttpServletResponse response, int id, String url, String goodName, float price, String description, int num) {
+		//插入
+		Product product = new Product(goodName, description, price, url, id, num);
+		System.out.println(num);
+		sellerMapper.addGood(product);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	}
+
+	public Map<String, Object> good_all(HttpServletResponse response, int id) {
+		//插入
+		ArrayList<Product> products = sellerMapper.allGood(id);
+		Map<String, Object> data = new HashMap<>();
+		data.put("array", products);
+		return ResponseCommon.wrappedResponse(data, 101, null);
+	}
+
 	public Map<String, Object> login(HttpServletResponse response, String telephone, String password) {
-		SellerUser user = sellerAccountMapper.findUser(telephone);
+		SellerUser user = sellerMapper.findUser(telephone);
 		if (user == null || !user.getPassword().equals(password) || user.getIsBlack() == 1 || user.getIsPass() == 0) {
 			return ResponseCommon.wrappedResponse(null, 102, null);
 		}
