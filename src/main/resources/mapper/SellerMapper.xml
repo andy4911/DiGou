@@ -25,6 +25,10 @@
         isOnline = #{isOnline}, portraitURL=#{portraitURL} WHERE userID=#{userID}
     </update>-->
     
+    <select id="allGood" parameterType="int" resultType="com.digou.entity.Product">
+        SELECT * FROM Product WHERE sID=#{0}
+    </select>
+
     <select id="findUser" parameterType="String" resultType="com.digou.entity.SellerUser">
         SELECT * FROM Seller_User WHERE telephone=#{0}
     </select>
