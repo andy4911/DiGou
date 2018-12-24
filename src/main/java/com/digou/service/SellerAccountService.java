@@ -64,7 +64,7 @@ public class SellerAccountService{
 
 	public Map<String, Object> login(HttpServletResponse response, String telephone, String password) {
 		SellerUser user = sellerAccountMapper.findUser(telephone);
-		if (user == null || !user.getPassword().equals(password)) {
+		if (user == null || !user.getPassword().equals(password) || user.getIsBlack() == 1 || user.getIsPass() == 0) {
 			return ResponseCommon.wrappedResponse(null, 102, null);
 		}
 		Map<String, Object> data = new HashMap<>();

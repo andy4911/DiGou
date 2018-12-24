@@ -12,6 +12,8 @@ public class SellerUser {
      */
 
     private int id;
+    private int isPass;
+    private int isBlack;
     private String url;
     private String telephone;
     private String shopName;
@@ -106,5 +108,21 @@ public class SellerUser {
 
     public int getId() {
         return id;
+    }
+
+    public void setIsBlack(int isBlack) {
+        this.isBlack = isBlack;
+    }
+
+    public int getIsBlack() {
+        return isBlack;
+    }
+
+    public void setIsPass(int isPass) {
+        this.isPass = isPass;
+    }
+
+    public int getIsPass() {
+        return isPass;
     }
 }
