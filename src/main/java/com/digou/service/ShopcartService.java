@@ -20,7 +20,6 @@ public class ShopcartService implements ShopcartIService {
 	@Resource
 	ShopcartMapper mapper;
 	
-	@Override
 	public Map<String, Object> addToCard(int cID, int pID) {
 		ArrayList<Map> records = mapper.find(cID, pID);
 		if(!records.isEmpty()) {
@@ -41,7 +40,6 @@ public class ShopcartService implements ShopcartIService {
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 	
-	@Override
 	public ArrayList<Product> test(int cID) {
 		return mapper.findProductsInCart(new Integer(cID));
 	}

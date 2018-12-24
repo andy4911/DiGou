@@ -24,24 +24,28 @@ public class AccountService implements AccountIService {
     @Resource
     private AccountMapper accountMapper;
     
-    @Override
-	public Map<String, Object> completeUserInfo(HttpServletResponse response, int userID, String nickname, String portraitURL) {
+    public Map<String, Object> alterUserInfo(HttpServletResponse response, 
+			 											     int userID, 
+			 											  String nickname, 
+			 											  String address,
+			 											  String portraitURL) {
     	CUser user = accountMapper.findCUserByID(userID);
     	if (user == null) {
 			return ResponseCommon.wrappedResponse(null, 102, null);
 		}
-    	if (nickname.length() > 0) {
-        	user.nickname = nickname;
-		}
-    	if (portraitURL.length() > 0) {
-        	user.portraitURL = portraitURL;
-		}
+        user.nickname = nickname;
+        user.portraitURL = portraitURL;
+    	user.address = address;
     	accountMapper.updateCUser(user);
     	return ResponseCommon.wrappedResponse(null, 101, null);
     }
     
-    @Override
-	public Map<String, Object> logup(HttpServletResponse response, String username, String password) {
+    public Map<String, Object> logup(HttpServletResponse response, 
+			  									  String username, 
+			  									  String password,
+			  									  String nickname,
+			  									  String portraitURL,
+			  									  String address) {		
     	CUser account = accountMapper.findCUser(username);
     	if (account != null) {
     		//用户名已存在
@@ -50,7 +54,10 @@ public class AccountService implements AccountIService {
     	CUser newAccount = new CUser();
     	newAccount.username = username;
     	newAccount.password = password;
-//    	newAccount.isOnline = true;
+    	newAccount.nickname = nickname;
+    	newAccount.nickname = nickname;
+    	newAccount.portraitURL = portraitURL;
+    	newAccount.address = address;
     	int result = accountMapper.insertCUser(newAccount);
     	if (result != 1) {
 			return ResponseCommon.wrappedResponse(null, 106, null);
@@ -61,7 +68,6 @@ public class AccountService implements AccountIService {
     	return ResponseCommon.wrappedResponse(data, 101, null);
     }
 	
-    @Override
 	public Map<String, Object> loginCheck(HttpServletResponse response, String username, String password) {
 		CUser account = accountMapper.findCUser(username);
 		
@@ -77,7 +83,7 @@ public class AccountService implements AccountIService {
 		} else {
 //			account.isOnline = true;
 			code = AccountCheckEnum.SUCCESS;
-			accountMapper.updateCUser(account);
+//			accountMapper.updateCUser(account);
 			this.addCookie(response, username);
 		}
 		
@@ -85,6 +91,8 @@ public class AccountService implements AccountIService {
 		conditionArr.add("nickname");
 		conditionArr.add("userID");
 		conditionArr.add("portraitURL");
+		conditionArr.add("address");
+		conditionArr.add("username");
 		Map<String, Object> data = ResponseCommon.filter(account, conditionArr);
 		return ResponseCommon.wrappedResponse(data, code.value(), null);
 //		Map<String, Object> data = new HashMap<String, Object>();

@@ -5,16 +5,31 @@
 
     <!-- cUser -->
 	<insert id="insertCUser" parameterType="com.digou.entity.CUser" useGeneratedKeys="true" keyProperty="userID">
-		INSERT INTO CUser (userID, userName, isOnline, password, portraitURL)
-		VALUE (#{userID}, #{username}, #{isOnline}, #{password}, #{portraitURL})
+		INSERT INTO CUser (userID, userName, password, portraitURL, nickname, address)
+		VALUE (#{userID}, #{username}, #{password}, #{portraitURL}, #{nickname}, #{address})
 <!-- 		<selectKey keyProperty="userID" order="AFTER" resultType="Integer">
         	SELECT LAST_INSERT_ID()
     	</selectKey> -->
 	</insert>
     
     <update id="updateCUser" parameterType="com.digou.entity.CUser">
-        UPDATE CUser SET username=#{username}, password=#{password}, nickname = #{nickname}, cookie = #{cookie}, 
-        isOnline = #{isOnline}, portraitURL=#{portraitURL} WHERE userID=#{userID}
+        UPDATE CUser SET 
+        <if test='username != null'> 
+        	username=#{username}
+        </if>
+        <if test='password != null'> 
+        	, password=#{password}
+        </if>
+		<if test='nickname != null'> 
+        	, nickname = #{nickname}
+        </if>
+        <if test='address != null'> 
+        	, address = #{address}
+        </if>
+		<if test='portraitURL != null'> 
+        	, portraitURL = #{portraitURL}
+        </if>
+        WHERE userID=#{userID}
     </update>
     
     <select id="findCUser" parameterType="String" resultType="com.digou.entity.CUser">
