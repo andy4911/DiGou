@@ -41,12 +41,11 @@ public class ProductService implements ProductIService {
 		ArrayList<String> conditionArr = new ArrayList<String>();
 		conditionArr.add("pName");
 		conditionArr.add("price");
-		conditionArr.add("count");
-		conditionArr.add("sName");
+		conditionArr.add("num");
+		conditionArr.add("shopName");
 		conditionArr.add("pID");
 		conditionArr.add("description");
 		conditionArr.add("portraitURL");
-		conditionArr.add("sID");
 		
 		Map<String, Object> data = ResponseCommon.filter(productArr, conditionArr, "pArray");
 		Map<String, Object> map = new HashMap<String, Object>();
