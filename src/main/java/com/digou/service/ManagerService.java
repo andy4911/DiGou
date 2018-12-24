@@ -3,12 +3,10 @@ package com.digou.service;
 import com.digou.common.ResponseCommon;
 import com.digou.entity.SellerUser;
 import com.digou.mapper.ManagerMapper;
-import com.digou.mapper.SellerAccountMapper;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.persistence.Id;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;

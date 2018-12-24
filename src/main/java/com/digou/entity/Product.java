@@ -8,7 +8,20 @@ public class Product extends BaseEntity {
 	public int sID;
 	public String sName;
 	public String description;
-	public int count;
-	public int price;
+	public int num;
+	public float price;
 	public String portraitURL;
+
+	public Product(){
+
+    }
+
+	public Product(String pName, String description, float price, String portraitURL, int sID, int num) {
+		this.pName = pName;
+		this.description = description;
+		this.price = price;
+		this.portraitURL = portraitURL;
+		this.sID = sID;
+		this.num = num;
+	}
 }

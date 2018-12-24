@@ -1,7 +1,6 @@
 package com.digou.controller;
 
 import com.digou.service.ManagerService;
-import com.digou.service.SellerAccountService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
