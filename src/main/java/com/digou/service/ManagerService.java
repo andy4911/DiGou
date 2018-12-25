@@ -1,6 +1,7 @@
 package com.digou.service;
 
 import com.digou.common.ResponseCommon;
+import com.digou.entity.CUser;
 import com.digou.entity.SellerUser;
 import com.digou.mapper.ManagerMapper;
 import org.springframework.context.annotation.ComponentScan;
@@ -66,6 +67,29 @@ public class ManagerService {
         managerMapper.sellerUpdateReject(id);
         return ResponseCommon.wrappedResponse(null, 101, null);
     }
+
+    public Map<String, Object> customerBlackInfo(HttpServletResponse response) {
+        ArrayList<CUser> customerUsers = managerMapper.customerBlackInfo();
+        Map<String, Object> data = new HashMap<>();
+        data.put("array", customerUsers);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+    public Map<String, Object> managerSearchCustomer(HttpServletResponse response, String value) {
+        ArrayList<CUser> customerUsers = managerMapper.managerSearchCustomer(value);
+        Map<String, Object> data = new HashMap<>();
+        data.put("array", customerUsers);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+    public Map<String, Object> customerBlackCancel(HttpServletResponse response, int id) {
+        managerMapper.customerBlackCancel(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+
+    public Map<String, Object> customerWhiteBlock(HttpServletResponse response, int id) {
+        managerMapper.customerWhiteBlock(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+
 /*
 	public Map<String, Object> info_get(HttpServletResponse response, int id) {
 		//检查

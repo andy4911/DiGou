@@ -11,7 +11,23 @@
     <select id="findAll" resultType="com.digou.entity.Product">
         SELECT * FROM Product LIMIT #{origin},#{length}
     </select>-->
-    
+
+    <select id="customerBlackInfo" resultType="com.digou.entity.CUser">
+        SELECT * FROM  CUser WHERE isBlack=1
+    </select>
+
+    <select id="managerSearchCustomer" parameterType="String" resultType="com.digou.entity.CUser">
+                SELECT * FROM CUser WHERE isBlack=0 AND (username Like CONCAT('%', #{0}, '%') or nickname Like CONCAT('%', #{0}, '%'))
+    </select>
+
+    <update id="customerBlackCancel" parameterType="int">
+        UPDATE CUser SET isBlack=0 WHERE userID=#{0}
+    </update>
+
+    <update id="customerWhiteBlock" parameterType="int">
+        UPDATE CUser SET isBlack=1 WHERE userID=#{0}
+    </update>
+
     <select id="sellerPassInfo" resultType="com.digou.entity.SellerUser">
         SELECT * FROM Seller_User WHERE isPass=0 AND isBlack=0
     </select>
