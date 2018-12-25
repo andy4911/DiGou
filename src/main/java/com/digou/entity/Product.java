@@ -6,7 +6,7 @@ public class Product extends BaseEntity {
 	public int pID;
 	public String pName;
 	public int sID;
-	public String sName;
+	public String shopName;
 	public String description;
 	public int num;
 	public float price;
