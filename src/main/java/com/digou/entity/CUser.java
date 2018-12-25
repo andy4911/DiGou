@@ -8,7 +8,6 @@ public class CUser extends BaseEntity {
     public String username;
     public String nickname;
     public String password;
-    public boolean isOnline;
-    public String cookie;
     public String portraitURL;
+    public String address;
 }
