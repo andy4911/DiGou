@@ -21,7 +21,7 @@
     </select>
 
     <select id="sellerWhiteInfo" parameterType="String"  resultType="com.digou.entity.SellerUser">
-        SELECT * FROM Seller_User WHERE isPass=1 AND isBlack=0 AND (shopName Like CONCAT('%', #{0}, '%') or nickname Like CONCAT('%', #{0}, '%') or description Like CONCAT('%', #{0}, '%') or telephone Like CONCAT('%', #{0}, '%'))
+        SELECT *,(SELECT COUNT(*) FROM Product WHERE sID = id) as num FROM Seller_User WHERE isPass=1 AND isBlack=0 AND (shopName Like CONCAT('%', #{0}, '%') or nickname Like CONCAT('%', #{0}, '%') or description Like CONCAT('%', #{0}, '%') or telephone Like CONCAT('%', #{0}, '%'))
     </select>
 
     <select id="sellerWhiteBlock" parameterType="int">

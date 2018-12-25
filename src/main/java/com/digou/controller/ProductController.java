@@ -34,9 +34,7 @@ public class ProductController {
     
     @RequestMapping("/api/c/searchproducts")  
     public Map<String, Object> searchProducts(HttpServletResponse response, 
-            @RequestParam(value = "pName", required = false) String pName,
-            @RequestParam(value = "pageIndex", required = true) int pageIndex,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize) {
-    	return productService.searchProducts(response, pName, pageIndex, pageSize);
+            @RequestParam(value = "pName", required = false) String pName) {
+    	return productService.searchProducts(response, pName);
     } 
 }
