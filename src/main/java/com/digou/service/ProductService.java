@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @ComponentScan({"com.digou.mapper"})
 @Service("productService")
-public class ProductService implements ProductIService {
+public class ProductService {
 	
 	@Resource
 	ProductMapper productMapper;
@@ -51,6 +51,12 @@ public class ProductService implements ProductIService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("pageIndex", pageIndex);
 		return ResponseCommon.wrappedResponse(data, 101, map);
+//=======
+//	public Map<String, Object> searchProducts(HttpServletResponse response, String pName) {
+//		Map<String, Object> map = new HashMap<>();
+//		map.put("array", productMapper.find(pName));
+//		return ResponseCommon.wrappedResponse(map, 101, map);
+//>>>>>>> Stashed changes
 	}
 
 }

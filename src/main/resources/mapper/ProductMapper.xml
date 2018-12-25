@@ -8,6 +8,7 @@
         FROM Product, Seller_User 
         WHERE pName Like CONCAT('%', #{pName}, '%') AND Product.sID=Seller_User.id
         LIMIT #{origin},#{length}   
+--         SELECT * FROM Product WHERE pName Like CONCAT('%', #{0}, '%') OR description Like CONCAT('%', #{0}, '%')
     </select>
     
     <select id="findAll" resultType="com.digou.entity.Product">
