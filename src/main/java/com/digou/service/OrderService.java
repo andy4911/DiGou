@@ -16,6 +16,7 @@ import com.digou.entity.Product;
 import com.digou.mapper.AccountMapper;
 import com.digou.mapper.OrderMapper;
 import com.digou.mapper.ProductMapper;
+import com.digou.mapper.ShopcartMapper;
 
 @ComponentScan({"com.digou.mapper"})
 @Service("orderService")
@@ -25,6 +26,8 @@ public class OrderService implements OrderIService {
     private OrderMapper orderMapper;
 	@Resource
 	private ProductMapper productMapper;
+	@Resource
+	private ShopcartMapper cartMapper;
 	
 	public Map<String, Object> makeOrder(int pID, int cID) {
 		Product product = productMapper.findByID(pID);
@@ -39,6 +42,7 @@ public class OrderService implements OrderIService {
 		order.pID = pID;
 		order.orderPrice = product.price;
 		orderMapper.insert(order);
+		cartMapper.delete(cID, pID);
 		
 		ArrayList<String> conditionArr = new ArrayList<String>();
 		conditionArr.add("orderID");
@@ -56,7 +60,6 @@ public class OrderService implements OrderIService {
 		conditionArr.add("orderPrice");
 		Map<String, Object> data = ResponseCommon.filter(orders, conditionArr, "orderArr");
 		ArrayList<Map> orderArr = (ArrayList<Map>)data.get("orderArr");
-		System.out.println("#######" + orderArr.get(0) + orderArr.get(0).get("pID"));
 		
 		Iterator<Map> iterator = orderArr.iterator();
 		while(iterator.hasNext()) {

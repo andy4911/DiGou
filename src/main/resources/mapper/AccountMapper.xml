@@ -36,7 +36,7 @@
         SELECT * FROM CUser WHERE username=#{0}
     </select>
     
-    <select id="findCUserByID" parameterType="int" resultType="com.digou.entity.CUser">
+    <select id="findCUserByID" resultType="com.digou.entity.CUser">
         SELECT * FROM CUser WHERE userID=#{0}
     </select>
     

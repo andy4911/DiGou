@@ -21,4 +21,8 @@
     <select id="findProductsInCart" resultType="com.digou.entity.Product">
     	SELECT * FROM Product WHERE pID IN (SELECT pID FROM Shopcart WHERE cID=#{cID})
     </select>
+    
+    <delete id="delete" parameterType="int">
+    	DELETE FROM Shopcart WHERE cID=#{cID} AND pID=#{pID}
+    </delete>
 </mapper>
