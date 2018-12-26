@@ -5,8 +5,8 @@
 
     <!-- cUser -->
 	<insert id="insertCUser" parameterType="com.digou.entity.CUser" useGeneratedKeys="true" keyProperty="userID">
-		INSERT INTO CUser (userID, userName, password, portraitURL, nickname, address)
-		VALUE (#{userID}, #{username}, #{password}, #{portraitURL}, #{nickname}, #{address})
+		INSERT INTO CUser (userID, userName, password, portraitURL, nickname, address,isBlack)
+		VALUE (#{userID}, #{username}, #{password}, #{portraitURL}, #{nickname}, #{address},#{isBlack})
 <!-- 		<selectKey keyProperty="userID" order="AFTER" resultType="Integer">
         	SELECT LAST_INSERT_ID()
     	</selectKey> -->
@@ -36,7 +36,7 @@
         SELECT * FROM CUser WHERE username=#{0}
     </select>
     
-    <select id="findCUserByID" parameterType="int" resultType="com.digou.entity.CUser">
+    <select id="findCUserByID" resultType="com.digou.entity.CUser">
         SELECT * FROM CUser WHERE userID=#{0}
     </select>
     

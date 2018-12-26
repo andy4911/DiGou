@@ -1,9 +1,11 @@
 package com.digou.service;
 
 import com.digou.common.ResponseCommon;
+import com.digou.entity.Order;
 import com.digou.entity.Product;
 import com.digou.entity.SellerUser;
 import com.digou.mapper.SellerMapper;
+import org.omg.CORBA.BAD_INV_ORDER;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +54,7 @@ public class SellerService {
 		} else {
 			Map<String, Object> data = new HashMap<>();
 			data.put("data", sellerUser);
-			return ResponseCommon.wrappedResponse(data, 101, data);
+			return ResponseCommon.wrappedResponse(data, 101, null);
 		}
     }
 
@@ -89,4 +91,32 @@ public class SellerService {
 		data.put("data", user);
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
+
+	//郭伟明
+		//查看订单
+	public Map<String, Object> look_order(HttpServletResponse response, int id) {
+		//插入
+		ArrayList<Order> orders = sellerMapper.allOrder(id);
+		Map<String, Object> data = new HashMap<>();
+		data.put("order", orders);
+		return ResponseCommon.wrappedResponse(data, 101, null);
+	}
+		//退款
+	public Map<String, Object> refund_order(HttpServletResponse response, int orderId) {
+		sellerMapper.refund(orderId);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	}
+
+		//修改商品信息
+		public Map<String, Object> good_modify(HttpServletResponse response,
+											   int pID,
+											   String pName, String description, float price, String portraitURL, int sID, int num) {
+			Product product = new Product(  pName,  description,  price,  portraitURL,  sID,  num);
+			product.setPId(pID);
+			sellerMapper.modify(product);
+			return ResponseCommon.wrappedResponse(null, 101, null);
+		}
+	//
 }
+
+

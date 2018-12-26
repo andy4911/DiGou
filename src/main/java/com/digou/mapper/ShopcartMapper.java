@@ -12,4 +12,5 @@ public interface ShopcartMapper {
 	public int insert(int cID, int pID, long createTime);
 	public ArrayList<Map> find(Integer cID, Integer pID);
 	public ArrayList<Product> findProductsInCart(int cID);
+	public int delete(int cID, int pID);
 }

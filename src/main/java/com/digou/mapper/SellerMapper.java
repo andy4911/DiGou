@@ -1,5 +1,6 @@
 package com.digou.mapper;
 
+import com.digou.entity.Order;
 import com.digou.entity.Product;
 import com.digou.entity.SellerUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,5 +19,9 @@ public interface SellerMapper {
 //	public CUser findCUserByID(int userID);
 //	public void updateCUser(CUser account);
 //	public int insertCUser(CUser account);
-	
+
+	//gwm
+	ArrayList<Order> allOrder(int id);
+	void refund(int orderId);
+	void modify(Product product);
 }
