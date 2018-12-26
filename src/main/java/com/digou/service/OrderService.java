@@ -31,18 +31,21 @@ public class OrderService implements OrderIService {
 	@Resource
 	private ShopcartMapper cartMapper;
 	
-	public Map<String, Object> makeOrder(int pID, int cID) {
+	public Map<String, Object> makeOrder(int pID, int cID, int amount) {
 		Product product = productMapper.findByID(pID);
 		if (product == null) {
 			return ResponseCommon.wrappedResponse(null, 102, null);
-		} else if (product.num == 0) {
+		} else if (product.num < amount) {
 			return ResponseCommon.wrappedResponse(null, 105, null);
 		}
 		
+		productMapper.updateNum(product.num - amount, product.pID);
 		Order order = new Order();
+		order.createTime = System.currentTimeMillis();
 		order.cID = cID;
 		order.pID = pID;
 		order.orderPrice = product.price;
+		order.amount = amount;
 		orderMapper.insert(order);
 		cartMapper.delete(cID, pID);
 		

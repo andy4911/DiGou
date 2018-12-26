@@ -4,8 +4,8 @@
 <mapper namespace="com.digou.mapper.OrderMapper">  
 
 	<insert id="insert" parameterType="com.digou.entity.Order" useGeneratedKeys="true" keyProperty="orderID">
-		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice)
-		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice})
+		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount)
+		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount})
 	</insert>
 	
 	<resultMap id="OrderMap" type="com.digou.entity.Order">
@@ -15,6 +15,8 @@
 		<result column="orderPrice" jdbcType="INTEGER" property="orderPrice" />
 		<result column="pID" jdbcType="INTEGER" property="product.pID" />
 		<result column="isFinish" jdbcType="INTEGER" property="isFinish" />
+		<result column="amount" jdbcType="INTEGER" property="amount" />
+
 		
 		<result column="pID" jdbcType="INTEGER" property="product.pID" />
 		<result column="pName" jdbcType="VARCHAR" property="product.pName" />
@@ -28,7 +30,7 @@
 	
 	</resultMap> 
 	<select id="find" parameterType="int" resultMap="OrderMap">
-		SELECT Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL, isFinish
+		SELECT orderID, cID, Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL, isFinish, amount
 		FROM OrderForm RIGHT JOIN Product ON OrderForm.pID=Product.pID
 			 RIGHT JOIN Seller_User ON Product.sID=Seller_User.id
 		WHERE cID=#{0}
