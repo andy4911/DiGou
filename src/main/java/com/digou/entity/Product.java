@@ -11,6 +11,10 @@ public class Product extends BaseEntity {
 	public int num;
 	public float price;
 	public String portraitURL;
+	public long createTime;
+	public int isFinish;
+
+	public int orderID;
 
 	public Product(){
 
@@ -23,5 +27,8 @@ public class Product extends BaseEntity {
 		this.portraitURL = portraitURL;
 		this.sID = sID;
 		this.num = num;
+	}
+	public void setPId(int pid) {
+		this.pID = pid;
 	}
 }

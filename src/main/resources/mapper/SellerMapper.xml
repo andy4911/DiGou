@@ -29,6 +29,7 @@
         SELECT * FROM Product WHERE sID=#{0}
     </select>
 
+
     <select id="findUser" parameterType="String" resultType="com.digou.entity.SellerUser">
         SELECT * FROM Seller_User WHERE telephone=#{0}
     </select>
@@ -36,7 +37,26 @@
     <select id="findUserById" parameterType="int" resultType="com.digou.entity.SellerUser">
         SELECT * FROM Seller_User WHERE id=#{0}
     </select>
-    
+
+    <!--郭伟明-->
+    <!--商家查看订单-->
+
+    <select id="allOrder" parameterType="int" resultType="com.digou.entity.Product">
+      SELECT * FROM OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID WHERE sID=#{0}
+    </select>
+
+    <!--商家退款-->
+    <update id="refund" parameterType="int">
+        UPDATE OrderForm SET isFinish=0 WHERE orderID=#{orderId}
+    </update>
+
+    <!--修改商品信息-->
+    <update id="modify" parameterType="com.digou.entity.Product">
+        UPDATE Product SET pName=#{pName}, description=#{description}, price = #{price}, portraitURL = #{portraitURL},
+        sID = #{sID}, num=#{num} WHERE pID=#{pID}
+    </update>
+    <!---->
+
 	<!-- bUser -->
 	<!-- aUser -->
     

@@ -40,6 +40,11 @@ public class ShopcartService implements ShopcartIService {
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 	
+	public Map<String, Object> removeFromCart(int cID, int pID) {
+		mapper.delete(cID, pID);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	}
+	
 	public ArrayList<Product> test(int cID) {
 		return mapper.findProductsInCart(new Integer(cID));
 	}

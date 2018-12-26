@@ -53,4 +53,11 @@ public class ShopcartController {
     	return shopcartService.test(cID);
     }
     
+    
+    @RequestMapping("api/c/removeFromCart")  
+    public Map<String, Object> removeFromCart(HttpServletResponse response, 
+            @RequestParam(value = "cID",required = true) Integer cID, 
+            @RequestParam(value = "pID",required = true) Integer pID) {
+    	return shopcartService.removeFromCart(cID, pID);
+    }
 }

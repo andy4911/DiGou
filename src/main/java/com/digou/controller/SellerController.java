@@ -71,4 +71,33 @@ public class SellerController {
                                         @RequestParam(value = "id",required = true) int id) {
         return sellerService.good_all(response, id);
     }
+
+    //以下是郭伟明的代码
+    //商家查看订单
+    @RequestMapping("/api/b/order/all")
+    public Map<String, Object> look_order(HttpServletResponse response,
+                                          @RequestParam(value="id",required = true) int id){
+        return sellerService.look_order(response,id );
+    }
+
+    //商家退款
+    @RequestMapping("/api/b/order/refund")
+    public Map<String, Object> refund_order(HttpServletResponse response,
+                                          @RequestParam(value="orderId",required = true) int orderId) {
+        return sellerService.refund_order(response, orderId);
+    }
+
+    //修改商品信息
+    @RequestMapping("/api/b/good/modify")
+    public Map<String, Object> good_modify(HttpServletResponse response,
+                                           @RequestParam(value = "pID",required = true) int pID,
+                                           @RequestParam(value = "pName",required = true) String pName,
+                                           @RequestParam(value = "num",required = true) int num,
+                                           @RequestParam(value = "num",required = true) int sID,
+                                           @RequestParam(value = "description",required = true) String description,
+                                           @RequestParam(value = "price",required = true) float price,
+                                           @RequestParam(value = "portraitURL",required = true) String portraitURL
+                                            ){
+        return sellerService.good_modify(response,pID, pName,  description,  price,  portraitURL,  sID,  num);
+    }
 }

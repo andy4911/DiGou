@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!-- 指定工作空间，要与接口名相同，源代码没有去看，猜测应该是通过"这里的namespace.下边方法的id"来定位方法的 -->  
+<mapper namespace="com.digou.mapper.FavouriteMapper">  
+
+	<insert id="insert" parameterType="com.digou.entity.Favourite">
+		INSERT INTO Favourite (cID, pID, createTime)
+		VALUE (#{cID}, #{pID}, #{createTime})
+	</insert>
+	
+	<resultMap id="FavouriteMap" type="com.digou.entity.Favourite">
+    	<result column="cID" jdbcType="INTEGER" property="cID" />
+    	<result column="pID" jdbcType="INTEGER" property="pID" />
+		<result column="pID" jdbcType="INTEGER" property="product.pID" />
+		
+		<result column="pID" jdbcType="INTEGER" property="product.pID" />
+		<result column="pName" jdbcType="VARCHAR" property="product.pName" />
+		<result column="num" jdbcType="INTEGER" property="product.num" />
+		<result column="sID" jdbcType="INTEGER" property="product.sID" />
+		<result column="shopName" jdbcType="VARCHAR" property="product.shopName" />
+		<result column="description" jdbcType="VARCHAR" property="product.description" />
+		<result column="portraitURL" jdbcType="VARCHAR" property="product.portraitURL" />
+		<result column="price" jdbcType="INTEGER" property="product.price" />
+	
+	</resultMap> 
+	<select id="findByCID" parameterType="int" resultMap="FavouriteMap">
+		SELECT Product.pID, pName, sID, shopName, Product.description, price, num, portraitURL
+		FROM Favourite RIGHT JOIN Product ON Favourite.pID=Product.pID
+			 RIGHT JOIN Seller_User ON Product.sID=Seller_User.id
+		WHERE cID=#{0}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM Favourite WHERE cID=#{cID} AND pID=#{pID}
+	</delete>
+	
+</mapper>
