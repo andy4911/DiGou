@@ -18,6 +18,8 @@ import com.digou.mapper.OrderMapper;
 import com.digou.mapper.ProductMapper;
 import com.digou.mapper.ShopcartMapper;
 
+import antlr.collections.impl.IntRange;
+
 @ComponentScan({"com.digou.mapper"})
 @Service("orderService")
 public class OrderService implements OrderIService {
@@ -76,4 +78,8 @@ public class OrderService implements OrderIService {
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 
+	public Map<String, Object> refund(int orderID) {
+		int r = orderMapper.updateStatus(0, orderID);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	} 
 }

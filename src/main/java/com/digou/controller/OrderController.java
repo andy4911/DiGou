@@ -37,5 +37,10 @@ public class OrderController {
     	return orderService.lookupOrders(cID);
     } 
 
+    @RequestMapping("/api/c/refund")  
+    public Map<String, Object> refund(HttpServletResponse response, 
+            @RequestParam(value = "orderID", required = true) int orderID){
+    	return orderService.refund(orderID);
+    } 
 
 }

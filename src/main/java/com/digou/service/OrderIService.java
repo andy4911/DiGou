@@ -8,4 +8,5 @@ public interface OrderIService {
 	
 	public Map<String, Object> lookupOrders(int cID);
 
+	public Map<String, Object> refund(int orderID);
 }

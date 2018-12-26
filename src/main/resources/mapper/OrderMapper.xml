@@ -32,4 +32,8 @@
 		WHERE cID=#{0}
 	</select>
 	
+	<update id="updateStatus" parameterType="int">
+		UPDATE OrderForm SET isFinish=#{status} WHERE orderID=#{orderID}
+	</update>
+	
 </mapper>
