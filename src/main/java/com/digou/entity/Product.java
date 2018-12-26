@@ -14,6 +14,8 @@ public class Product extends BaseEntity {
 	public long createTime;
 	public int isFinish;
 
+	public int orderID;
+
 	public Product(){
 
     }
