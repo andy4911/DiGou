@@ -93,7 +93,7 @@ public class SellerController {
                                            @RequestParam(value = "pID",required = true) int pID,
                                            @RequestParam(value = "pName",required = true) String pName,
                                            @RequestParam(value = "num",required = true) int num,
-                                           @RequestParam(value = "num",required = true) int sID,
+                                           @RequestParam(value = "sID",required = true) int sID,
                                            @RequestParam(value = "description",required = true) String description,
                                            @RequestParam(value = "price",required = true) float price,
                                            @RequestParam(value = "portraitURL",required = true) String portraitURL
