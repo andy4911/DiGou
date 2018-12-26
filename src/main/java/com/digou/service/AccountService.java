@@ -58,6 +58,7 @@ public class AccountService implements AccountIService {
     	newAccount.nickname = nickname;
     	newAccount.portraitURL = portraitURL;
     	newAccount.address = address;
+    	newAccount.isBlack = 0;
     	int result = accountMapper.insertCUser(newAccount);
     	if (result != 1) {
 			return ResponseCommon.wrappedResponse(null, 106, null);
@@ -80,7 +81,12 @@ public class AccountService implements AccountIService {
 //		} else if (account.isOnline) {
 //			code = AccountCheckEnum.IS_ONLINE;
 //			account = null;
-		} else {
+		}
+		else if (account.isBlack==1)
+		{
+			code = AccountCheckEnum.IS_BLACK;
+		}
+		else {
 //			account.isOnline = true;
 			code = AccountCheckEnum.SUCCESS;
 //			accountMapper.updateCUser(account);
