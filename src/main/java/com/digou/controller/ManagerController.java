@@ -58,6 +58,28 @@ public class ManagerController {
         return managerService.sellerPassReject(response, id);
     }
 
+    @RequestMapping("/api/m/customer_black_info")
+    public Map<String, Object> customerBlackInfo(HttpServletResponse response) {
+        return managerService.customerBlackInfo(response);
+    }
+    @RequestMapping("/api/m/search/customer")
+    public Map<String, Object> managerSearchCustomer(HttpServletResponse response,
+                                                @RequestParam(value = "value",required = true) String value) {
+        return managerService.managerSearchCustomer(response, value);
+    }
+    @RequestMapping("/api/m/customer_black_cancel")
+    public Map<String, Object> customerBlackCancel(HttpServletResponse response,
+                                                 @RequestParam(value = "id",required = true) int id) {
+        return managerService.customerBlackCancel(response, id);
+    }
+
+    @RequestMapping("/api/m/customer_white_block")
+    public Map<String, Object> customerWhiteBlock(HttpServletResponse response,
+                                                @RequestParam(value = "id",required = true) int id) {
+        return managerService.customerWhiteBlock(response, id);
+    }
+
+
     /*
     @RequestMapping("/api/b/register")
     public Map<String, Object> register(HttpServletResponse response,
