@@ -14,6 +14,7 @@
 		<result column="createTime" jdbcType="INTEGER" property="createTime" />
 		<result column="orderPrice" jdbcType="INTEGER" property="orderPrice" />
 		<result column="pID" jdbcType="INTEGER" property="product.pID" />
+		<result column="isFinish" jdbcType="INTEGER" property="isFinish" />
 		
 		<result column="pID" jdbcType="INTEGER" property="product.pID" />
 		<result column="pName" jdbcType="VARCHAR" property="product.pName" />
@@ -23,10 +24,11 @@
 		<result column="description" jdbcType="VARCHAR" property="product.description" />
 		<result column="portraitURL" jdbcType="VARCHAR" property="product.portraitURL" />
 		<result column="price" jdbcType="INTEGER" property="product.price" />
+		
 	
 	</resultMap> 
 	<select id="find" parameterType="int" resultMap="OrderMap">
-		SELECT Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL
+		SELECT Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL, isFinish
 		FROM OrderForm RIGHT JOIN Product ON OrderForm.pID=Product.pID
 			 RIGHT JOIN Seller_User ON Product.sID=Seller_User.id
 		WHERE cID=#{0}
