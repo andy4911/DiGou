@@ -11,4 +11,5 @@ public interface ProductMapper {
 	public ArrayList<Product> find(String pName);
 	public ArrayList<Product> findAll(int origin, int length);
 	public Product findByID(int pID);
+	public int updateNum(int num, int pID);
 }

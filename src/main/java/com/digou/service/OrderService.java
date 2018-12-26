@@ -18,6 +18,8 @@ import com.digou.mapper.OrderMapper;
 import com.digou.mapper.ProductMapper;
 import com.digou.mapper.ShopcartMapper;
 
+import antlr.collections.impl.IntRange;
+
 @ComponentScan({"com.digou.mapper"})
 @Service("orderService")
 public class OrderService implements OrderIService {
@@ -29,18 +31,21 @@ public class OrderService implements OrderIService {
 	@Resource
 	private ShopcartMapper cartMapper;
 	
-	public Map<String, Object> makeOrder(int pID, int cID) {
+	public Map<String, Object> makeOrder(int pID, int cID, int amount) {
 		Product product = productMapper.findByID(pID);
 		if (product == null) {
 			return ResponseCommon.wrappedResponse(null, 102, null);
-		} else if (product.num == 0) {
+		} else if (product.num < amount) {
 			return ResponseCommon.wrappedResponse(null, 105, null);
 		}
 		
+		productMapper.updateNum(product.num - amount, product.pID);
 		Order order = new Order();
+		order.createTime = System.currentTimeMillis();
 		order.cID = cID;
 		order.pID = pID;
 		order.orderPrice = product.price;
+		order.amount = amount;
 		orderMapper.insert(order);
 		cartMapper.delete(cID, pID);
 		
@@ -52,25 +57,32 @@ public class OrderService implements OrderIService {
 	
 	public Map<String, Object> lookupOrders(int cID) {
 		ArrayList<Order> orders = orderMapper.find(cID);
-		ArrayList<String> conditionArr = new ArrayList<String>();
-		conditionArr.add("orderID");
-		conditionArr.add("cID");
-		conditionArr.add("pID");
-		conditionArr.add("createTime");
-		conditionArr.add("orderPrice");
-		Map<String, Object> data = ResponseCommon.filter(orders, conditionArr, "orderArr");
-		ArrayList<Map> orderArr = (ArrayList<Map>)data.get("orderArr");
 		
-		Iterator<Map> iterator = orderArr.iterator();
-		while(iterator.hasNext()) {
-			Map order = iterator.next();
-			System.out.println(order.get("orderID") + "#################");
-			Product product = productMapper.findByID((int)order.get("pID"));
-			order.put("product", product);	
-		}
+//		ArrayList<String> conditionArr = new ArrayList<String>();
+//		conditionArr.add("orderID");
+//		conditionArr.add("cID");
+//		conditionArr.add("pID");
+//		conditionArr.add("createTime");
+//		conditionArr.add("orderPrice");
+//		Map<String, Object> data = ResponseCommon.filter(orders, conditionArr, "orderArr");
+		Map<String, Object> data = new HashMap<>();
+		data.put("orderArr", orders);
+//		ArrayList<Map> orderArr = (ArrayList<Map>)data.get("orderArr");
+		
+//		Iterator<Map> iterator = orderArr.iterator();
+//		while(iterator.hasNext()) {
+//			Map order = iterator.next();
+//			System.out.println(order.get("orderID") + "#################");
+//			Product product = productMapper.findByID((int)order.get("pID"));
+//			order.put("product", product);	
+//		}
 		
 		
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 
+	public Map<String, Object> refund(int orderID) {
+		int r = orderMapper.updateStatus(0, orderID);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	} 
 }
