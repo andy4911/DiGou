@@ -26,7 +26,7 @@ public enum AccountCheckEnum {
             return PASSWORD_ERROR;
         case 104:
             return IS_ONLINE;
-        case 105:
+        case 106:
             return IS_BLACK;
         default:
             return null;
