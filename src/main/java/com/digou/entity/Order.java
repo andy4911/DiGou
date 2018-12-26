@@ -7,4 +7,5 @@ public class Order extends BaseEntity {
 	public long createTime;
 	public float orderPrice;
 	//public int  isFinissh;
+	public Product product;
 }

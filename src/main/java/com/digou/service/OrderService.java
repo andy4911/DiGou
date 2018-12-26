@@ -52,22 +52,25 @@ public class OrderService implements OrderIService {
 	
 	public Map<String, Object> lookupOrders(int cID) {
 		ArrayList<Order> orders = orderMapper.find(cID);
-		ArrayList<String> conditionArr = new ArrayList<String>();
-		conditionArr.add("orderID");
-		conditionArr.add("cID");
-		conditionArr.add("pID");
-		conditionArr.add("createTime");
-		conditionArr.add("orderPrice");
-		Map<String, Object> data = ResponseCommon.filter(orders, conditionArr, "orderArr");
-		ArrayList<Map> orderArr = (ArrayList<Map>)data.get("orderArr");
 		
-		Iterator<Map> iterator = orderArr.iterator();
-		while(iterator.hasNext()) {
-			Map order = iterator.next();
-			System.out.println(order.get("orderID") + "#################");
-			Product product = productMapper.findByID((int)order.get("pID"));
-			order.put("product", product);	
-		}
+//		ArrayList<String> conditionArr = new ArrayList<String>();
+//		conditionArr.add("orderID");
+//		conditionArr.add("cID");
+//		conditionArr.add("pID");
+//		conditionArr.add("createTime");
+//		conditionArr.add("orderPrice");
+//		Map<String, Object> data = ResponseCommon.filter(orders, conditionArr, "orderArr");
+		Map<String, Object> data = new HashMap<>();
+		data.put("orderArr", orders);
+//		ArrayList<Map> orderArr = (ArrayList<Map>)data.get("orderArr");
+		
+//		Iterator<Map> iterator = orderArr.iterator();
+//		while(iterator.hasNext()) {
+//			Map order = iterator.next();
+//			System.out.println(order.get("orderID") + "#################");
+//			Product product = productMapper.findByID((int)order.get("pID"));
+//			order.put("product", product);	
+//		}
 		
 		
 		return ResponseCommon.wrappedResponse(data, 101, null);
