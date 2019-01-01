@@ -15,4 +15,8 @@
     <select id="findByID" resultType="com.digou.entity.Product">
         SELECT * FROM Product WHERE pID=#{pID}
     </select>
+    
+    <update id="updateNum">  
+    	UPDATE Product SET num=#{num} WHERE pID=#{pID}
+    </update>
 </mapper>
