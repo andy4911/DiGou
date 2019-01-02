@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -28,14 +29,20 @@ public class AccountService implements AccountIService {
 			 											     int userID, 
 			 											  String nickname, 
 			 											  String address,
-			 											  String portraitURL) {
+			 											  String portraitURL,
+			 											  String tel) {
     	CUser user = accountMapper.findCUserByID(userID);
     	if (user == null) {
 			return ResponseCommon.wrappedResponse(null, 102, null);
 		}
+    	user = accountMapper.findCUser(tel);
+    	if (user != null) {
+    		return ResponseCommon.wrappedResponse(null, 102, null);
+		}
         user.nickname = nickname;
         user.portraitURL = portraitURL;
     	user.address = address;
+    	user.username = tel;
     	accountMapper.updateCUser(user);
     	return ResponseCommon.wrappedResponse(null, 101, null);
     }
@@ -119,5 +126,20 @@ public class AccountService implements AccountIService {
     	timeCookie.setPath("/");
         response.addCookie(nameCookie);
         response.addCookie(timeCookie);
+	}
+    
+	public Map<String, Object> myInfo(HttpServletResponse response, int cID) {
+		CUser user = accountMapper.findCUserByID(cID);
+		if (user == null) {
+			return ResponseCommon.wrappedResponse(null, 103, null);
+		}
+		ArrayList<String> conditionArr = new ArrayList<String>();
+		conditionArr.add("username");
+		conditionArr.add("portraitURL");
+		conditionArr.add("nickname");
+		conditionArr.add("address");
+		Map<String, Object> data = ResponseCommon.filter(user, conditionArr);
+
+		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 }
