@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -125,5 +126,20 @@ public class AccountService implements AccountIService {
     	timeCookie.setPath("/");
         response.addCookie(nameCookie);
         response.addCookie(timeCookie);
+	}
+    
+	public Map<String, Object> myInfo(HttpServletResponse response, int cID) {
+		CUser user = accountMapper.findCUserByID(cID);
+		if (user == null) {
+			return ResponseCommon.wrappedResponse(null, 103, null);
+		}
+		ArrayList<String> conditionArr = new ArrayList<String>();
+		conditionArr.add("username");
+		conditionArr.add("portraitURL");
+		conditionArr.add("nickname");
+		conditionArr.add("address");
+		Map<String, Object> data = ResponseCommon.filter(user, conditionArr);
+
+		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 }

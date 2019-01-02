@@ -75,4 +75,10 @@ public class AccountController {
 		}
     	return true;
     }
+    
+    @RequestMapping("/api/c/myInfo")  
+    public Map<String, Object> myInfo(HttpServletResponse response, 
+            @RequestParam(value = "cID",required = true) int cID) {
+    	return accountService.myInfo(response, cID);
+    }
 }

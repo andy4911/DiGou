@@ -20,4 +20,6 @@ public interface AccountIService {
 												  String address);
 	public Map<String, Object> loginCheck(HttpServletResponse response, String userName, String password);
 	
+	public Map<String, Object> myInfo(HttpServletResponse response, int cID);
+	
 }
