@@ -32,7 +32,6 @@ public class OrderController {
     	return orderService.makeOrder(pID, cID, amount);
     } 
     
-    
     @RequestMapping("/api/c/lookupOrders")  
     public Map<String, Object> lookupOrders(HttpServletResponse response, 
             @RequestParam(value = "cID", required = true) int cID){
