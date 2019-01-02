@@ -4,18 +4,19 @@
 <mapper namespace="com.digou.mapper.OrderMapper">  
 
 	<insert id="insert" parameterType="com.digou.entity.Order" useGeneratedKeys="true" keyProperty="orderID">
-		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount)
-		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount})
+		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount,adminProfit)
+		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount},#{adminProfit})
 	</insert>
 	
 	<resultMap id="OrderMap" type="com.digou.entity.Order">
     	<result column="cID" jdbcType="INTEGER" property="cID" />
     	<result column="pID" jdbcType="INTEGER" property="pID" />
 		<result column="createTime" jdbcType="INTEGER" property="createTime" />
-		<result column="orderPrice" jdbcType="INTEGER" property="orderPrice" />
+		<result column="orderPrice" jdbcType="REAL" property="orderPrice" />
 		<result column="pID" jdbcType="INTEGER" property="product.pID" />
 		<result column="isFinish" jdbcType="INTEGER" property="isFinish" />
 		<result column="amount" jdbcType="INTEGER" property="amount" />
+		<result column="adminProfit" jdbcType="REAL" property="adminProfit" />
 
 		
 		<result column="pID" jdbcType="INTEGER" property="product.pID" />

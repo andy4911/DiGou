@@ -9,4 +9,5 @@ public class Order extends BaseEntity {
 	public int isFinish;
 	public int amount;
 	public Product product;
+	public float adminProfit;
 }
