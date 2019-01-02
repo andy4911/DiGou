@@ -10,7 +10,8 @@ public interface AccountIService {
 															 int userID, 
 													      String nickname, 
 													      String address,
-													      String portraitURL);
+													      String portraitURL,
+													      String tel);
 	public Map<String, Object> logup(HttpServletResponse response, 
 												  String username, 
 												  String password,
