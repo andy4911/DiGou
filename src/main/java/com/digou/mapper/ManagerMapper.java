@@ -22,6 +22,8 @@ public interface ManagerMapper {
 	ArrayList<Order> monthOrder(long start ,long end);
 	ArrayList<Order> yearOrder(long start ,long end);
 	ArrayList<Order> weekOrder(long start ,long end);
+	ArrayList<Order>  searchOderByID(int orderID);
+
 
 	void customerBlackCancel(int id);
 	void customerWhiteBlock(int id);
