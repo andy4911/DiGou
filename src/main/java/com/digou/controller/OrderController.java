@@ -44,4 +44,9 @@ public class OrderController {
     	return orderService.refund(orderID);
     } 
 
+    @RequestMapping("/api/c/confirmOrder")  
+    public Map<String, Object> confirm(HttpServletResponse response, 
+            @RequestParam(value = "orderID", required = true) int orderID){
+    	return orderService.confirm(orderID);
+    } 
 }

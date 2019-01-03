@@ -88,4 +88,9 @@ public class OrderService implements OrderIService {
 		int r = orderMapper.updateStatus(0, orderID);
 		return ResponseCommon.wrappedResponse(null, 101, null);
 	} 
+	
+	public Map<String, Object> confirm(int orderID) {
+		int r = orderMapper.updateStatus(2, orderID);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	} 
 }

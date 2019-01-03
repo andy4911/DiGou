@@ -22,6 +22,8 @@ import com.digou.common.*;
 public class FavouriteService implements FavouriteIService {
 	@Resource
 	FavouriteMapper favouriteMapper;
+	@Resource
+	FavouriteShopMapper favouriteShopMapper;
 	
 	public Map<String, Object> addFavourite(HttpServletResponse response, int cID, int pID) {
 		Favourite favourite = new Favourite();
@@ -44,6 +46,27 @@ public class FavouriteService implements FavouriteIService {
 	
 	public Map<String, Object> unfavourite(HttpServletResponse response, int cID, int pID) {
 		favouriteMapper.delete(cID, pID);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	}
+	
+	public Map<String, Object> addFavouriteShop(HttpServletResponse response, int cID, int sID) {
+		long createTime = System.currentTimeMillis();
+		int r = favouriteShopMapper.insert(cID, sID, createTime);
+		if (r > 0) {
+			return ResponseCommon.wrappedResponse(null, 101, null);
+		}
+		return ResponseCommon.wrappedResponse(null, 105, null);
+	}
+	
+	public Map<String, Object> myFavouriteShop(HttpServletResponse response, int cID) {
+		ArrayList<SellerUser> arr = favouriteShopMapper.find(cID);
+		Map<String, Object> data = new HashMap<>();
+		data.put("favourites", arr);
+		return ResponseCommon.wrappedResponse(data, 101, null);
+	}
+	
+	public Map<String, Object> unfavouriteShop(HttpServletResponse response, int cID, int sID) {
+		favouriteShopMapper.delete(cID, sID);
 		return ResponseCommon.wrappedResponse(null, 101, null);
 	}
 }

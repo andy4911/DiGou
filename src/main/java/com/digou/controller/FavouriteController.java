@@ -41,4 +41,24 @@ public class FavouriteController {
             @RequestParam(value = "pID", required = true) int pID) {
     	return favouriteService.unfavourite(response, cID, pID);
     }
+    
+    @RequestMapping("/api/c/addFavouriteShop")  
+    public Map<String, Object> addFavouriteShop(HttpServletResponse response, 
+            @RequestParam(value = "cID", required = true) int cID,
+            @RequestParam(value = "sID", required = true) int sID) {
+    	return favouriteService.addFavouriteShop(response, cID, sID);
+    }
+    
+    @RequestMapping("/api/c/myFavouriteShop")  
+    public Map<String, Object> myFavouriteShop(HttpServletResponse response, 
+            @RequestParam(value = "cID", required = true) int cID) {
+    	return favouriteService.myFavouriteShop(response, cID);
+    }
+    
+    @RequestMapping("/api/c/unfavouriteShop")  
+    public Map<String, Object> unfavouriteShop(HttpServletResponse response, 
+            @RequestParam(value = "cID", required = true) int cID, 
+            @RequestParam(value = "sID", required = true) int sID) {
+    	return favouriteService.unfavouriteShop(response, cID, sID);
+    }
 }
