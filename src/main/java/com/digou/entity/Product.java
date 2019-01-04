@@ -13,9 +13,10 @@ public class Product extends BaseEntity {
 	public String portraitURL;
 	public long createTime;
 	public int isFinish;
+	public int number = 1;
+	public int orderID;
 
 	public Product(){
-
     }
 
 	public Product(String pName, String description, float price, String portraitURL, int sID, int num) {

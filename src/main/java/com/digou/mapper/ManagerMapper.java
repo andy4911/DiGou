@@ -1,6 +1,7 @@
 package com.digou.mapper;
 
 import com.digou.entity.CUser;
+import com.digou.entity.Order;
 import com.digou.entity.SellerUser;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,6 +16,12 @@ public interface ManagerMapper {
 
 	ArrayList<CUser> customerBlackInfo();
 	ArrayList<CUser> managerSearchCustomer(String value);
+
+	ArrayList<Order> allOrder();
+	ArrayList<Order> dayOrder(long start ,long end);
+	ArrayList<Order> monthOrder(long start ,long end);
+	ArrayList<Order> yearOrder(long start ,long end);
+	ArrayList<Order> weekOrder(long start ,long end);
 
 	void customerBlackCancel(int id);
 	void customerWhiteBlock(int id);

@@ -6,5 +6,8 @@ public class Order extends BaseEntity {
 	public int pID;//productID
 	public long createTime;
 	public float orderPrice;
-	//public int  isFinissh;
+	public int isFinish;
+	public int amount;
+	public Product product;
+	public float adminProfit;
 }

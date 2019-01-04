@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 public enum AccountCheckEnum {
-    SUCCESS(101), USERNAME_ERROR(102), PASSWORD_ERROR(103), IS_ONLINE(104),IS_BLACK(105);
+    SUCCESS(101), USERNAME_ERROR(102), PASSWORD_ERROR(103), IS_ONLINE(104),IS_BLACK(106);
 	
 	private int value = 0;
 	
@@ -26,7 +26,7 @@ public enum AccountCheckEnum {
             return PASSWORD_ERROR;
         case 104:
             return IS_ONLINE;
-        case 105:
+        case 106:
             return IS_BLACK;
         default:
             return null;

@@ -42,7 +42,7 @@
     <!--商家查看订单-->
 
     <select id="allOrder" parameterType="int" resultType="com.digou.entity.Product">
-      SELECT * FROM OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID WHERE sID=#{0}
+      SELECT * FROM OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID WHERE sID=#{0} AND isFinish=1
     </select>
 
     <!--商家退款-->

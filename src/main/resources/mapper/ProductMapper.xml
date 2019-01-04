@@ -4,7 +4,8 @@
 <mapper namespace="com.digou.mapper.ProductMapper">  
     
     <select id="find" resultType="com.digou.entity.Product">
-        select * from Seller_User RIGHT join Product on Seller_User.id=Product.sID WHERE Product.pName Like CONCAT('%', #{0}, '%') OR Product.description Like CONCAT('%', #{0}, '%')
+        select * from Seller_User RIGHT join Product on Seller_User.id=Product.sID 
+        WHERE Product.pName Like CONCAT('%', #{0}, '%') OR Product.description Like CONCAT('%', #{0}, '%')
     </select>
     
     <select id="findAll" resultType="com.digou.entity.Product">
@@ -14,4 +15,8 @@
     <select id="findByID" resultType="com.digou.entity.Product">
         SELECT * FROM Product WHERE pID=#{pID}
     </select>
+    
+    <update id="updateNum">  
+    	UPDATE Product SET num=#{num} WHERE pID=#{pID}
+    </update>
 </mapper>
