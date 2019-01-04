@@ -15,5 +15,7 @@ public interface OrderMapper {
 	public ArrayList<Order> find(int cID);
 
 	public int updateStatus(int status, int orderID);
+	
+	public ArrayList<Order> findWithinTime(int cID, long begin, long end);
 }
 

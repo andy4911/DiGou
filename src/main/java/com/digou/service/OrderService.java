@@ -2,6 +2,7 @@ package com.digou.service;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,6 +12,9 @@ import com.digou.entity.Admin;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
+import com.digou.common.DateRange;
+import com.digou.common.DateRange.BeginOrEnd;
+import com.digou.common.DateRange.RangeType;
 import com.digou.common.ResponseCommon;
 import com.digou.entity.Order;
 import com.digou.entity.Product;
@@ -93,4 +97,52 @@ public class OrderService implements OrderIService {
 		int r = orderMapper.updateStatus(2, orderID);
 		return ResponseCommon.wrappedResponse(null, 101, null);
 	} 
+	
+	public Map<String, Object> ordersWithin(int cID, int type) {
+		ArrayList<Order> orders;
+		switch (type) {
+		case 1:
+			orders = orderMapper.findWithinTime(cID, 
+					DateRange.getTimeStamp(RangeType.YEAR, BeginOrEnd.BEGIN, new Date()),
+					DateRange.getTimeStamp(RangeType.YEAR, BeginOrEnd.END, new Date()));
+			break;
+			
+		case 2:
+			orders = orderMapper.findWithinTime(cID, 
+					DateRange.getTimeStamp(RangeType.MONTH, BeginOrEnd.BEGIN, new Date()),
+					DateRange.getTimeStamp(RangeType.MONTH, BeginOrEnd.END, new Date()));
+			break;
+			
+		case 3:
+			orders = orderMapper.findWithinTime(cID, 
+					DateRange.getTimeStamp(RangeType.DAY, BeginOrEnd.BEGIN, new Date()),
+					DateRange.getTimeStamp(RangeType.DAY, BeginOrEnd.END, new Date()));
+			break;
+			
+		case 4:
+			orders = orderMapper.findWithinTime(cID, 
+					DateRange.getTimeStamp(RangeType.WEEK, BeginOrEnd.BEGIN, new Date()),
+					DateRange.getTimeStamp(RangeType.WEEK, BeginOrEnd.END, new Date()));
+			break;
+
+		default:
+			return ResponseCommon.wrappedResponse(null, 103, null);
+		}
+		
+		if (orders == null) {
+			orders = new ArrayList<Order>();
+		}
+		
+		ArrayList<String> conditionArr = new ArrayList<>();
+		conditionArr.add("orderID");
+		conditionArr.add("cID");
+		conditionArr.add("pID");
+		conditionArr.add("createTime");
+		conditionArr.add("orderPrice");
+		conditionArr.add("amount");
+		conditionArr.add("product");
+		Map<String, Object> data = ResponseCommon.filter(orders, conditionArr, "orderArr");
+		return ResponseCommon.wrappedResponse(data, 101, null);
+	}
+
 }
