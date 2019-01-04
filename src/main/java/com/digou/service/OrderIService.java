@@ -9,4 +9,6 @@ public interface OrderIService {
 	public Map<String, Object> lookupOrders(int cID);
 
 	public Map<String, Object> refund(int orderID);
+	
+	public Map<String, Object> ordersWithin(int cID, int type);
 }
