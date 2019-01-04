@@ -105,7 +105,7 @@ public class SellerController {
                                            @RequestParam(value = "description",required = true) String description,
                                            @RequestParam(value = "price",required = true) float price,
                                            @RequestParam(value = "portraitURL",required = true) String portraitURL
-                                           
+
     ){
         return sellerService.good_modify(response,pID, pName,  description,  price,  portraitURL,  sID,  num);
     }
