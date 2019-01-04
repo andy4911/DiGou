@@ -95,17 +95,7 @@ public class ManagerService {
         data.put("array", orders);
         return ResponseCommon.wrappedResponse(data, 101, null);
     }
-        public Map<String,Object> searchOrderByTime(HttpServletResponse response,int year1,int month1,int day1,int year2,int month2,int day2){
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(year1,month1-1,day1,0,0,0);
-        long start = calendar1.getTimeInMillis();
-        System.out.println("start day is "+start);
-
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(year2,month2-1,day2+1,0,0,0);
-        long end = calendar2.getTimeInMillis();
-        System.out.println("end day is "+end);
-
+        public Map<String,Object> searchOrderByTime(HttpServletResponse response,long start,long end){
 	    ArrayList<Order> orders = managerMapper.searchOrderByTime(start,end);
         Map<String, Object> data = new HashMap<>();
         data.put("array", orders);

@@ -87,13 +87,9 @@ public class ManagerController {
 
     @RequestMapping("/api/m/search_order_by_time")
     public Map<String,Object> searchOrderByTime(HttpServletResponse response,
-                                       @RequestParam(value  = "year1",required = true) int year1 ,
-                                       @RequestParam(value  = "month1",required = true) int month1 ,
-                                       @RequestParam(value  = "day1",required = true) int day1,
-                                       @RequestParam(value  = "year2",required = true) int year2 ,
-                                       @RequestParam(value  = "month2",required = true) int month2 ,
-                                       @RequestParam(value  = "day2",required = true) int day2){
-        return managerService.searchOrderByTime(response,year1, month1,day1,year2,month2,day2);
+                                       @RequestParam(value  = "start",required = true) long start ,
+                                       @RequestParam(value  = "end",required = true) long end ){
+        return managerService.searchOrderByTime(response,start,end);
     }
     @RequestMapping("/api/m/change_profit_rate")
     public Map<String,Object> changeProfitRate(HttpServletResponse response,
