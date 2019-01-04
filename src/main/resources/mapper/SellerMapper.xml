@@ -26,7 +26,7 @@
     </update>-->
     
     <select id="allGood" parameterType="int" resultType="com.digou.entity.Product">
-        SELECT * FROM Product WHERE sID=#{0}
+        SELECT * FROM Product WHERE sID=#{0} AND isDelete=0
     </select>
 
 
@@ -41,13 +41,19 @@
     <!--郭伟明-->
     <!--商家查看订单-->
 
-    <select id="allOrder" parameterType="int" resultType="com.digou.entity.Product">
-      SELECT * FROM OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID WHERE sID=#{0} AND isFinish=1
+    <select id="allOrder" parameterType="int" resultType="com.digou.entity.Order">
+        SELECT * FROM (OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID) LEFT JOIN CUser ON OrderForm.cID=CUser.userID WHERE sID=#{0}
+        <!--SELECT * FROM OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID WHERE sID=#{0}-->
     </select>
 
     <!--商家退款-->
     <update id="refund" parameterType="int">
         UPDATE OrderForm SET isFinish=0 WHERE orderID=#{orderId}
+    </update>
+
+    <!--发货-->
+    <update id="sending" parameterType="int">
+        UPDATE OrderForm SET isFinish=3 WHERE orderID=#{orderId}
     </update>
 
     <!--修改商品信息-->
@@ -57,7 +63,18 @@
     </update>
     <!---->
 
-	<!-- bUser -->
-	<!-- aUser -->
-    
+    <!-- 计算收入-->
+    <select id="all_order_price" parameterType="int" resultType="com.digou.entity.Order">
+        SELECT * FROM OrderForm LEFT JOIN Product ON Product.pID=OrderForm.pID WHERE sID=#{id}
+    </select>
+
+    <!--下架-->
+    <select id="delete" parameterType="int" >
+        UPDATE Product SET isDelete=1 WHERE pID=#{pid}
+    </select>
+
+    <!--物流-->
+    <update id="select_logistics" >
+        UPDATE OrderForm SET company=#{com},logistics_point=#{point} WHERE orderID=#{id}
+    </update>
 </mapper>
