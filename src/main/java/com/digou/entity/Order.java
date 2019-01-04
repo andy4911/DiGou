@@ -21,6 +21,7 @@ public class Order extends BaseEntity {
 	public String address;
 	public String cName;
 	public String shopName;
+	public String sellerName;
 	/** isFinissh
 	 * 1 未发货
 	 * 0 订单失败（退款）

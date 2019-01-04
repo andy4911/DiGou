@@ -1,9 +1,6 @@
 package com.digou.mapper;
 
-import com.digou.entity.CUser;
-import com.digou.entity.Order;
-import com.digou.entity.Product;
-import com.digou.entity.SellerUser;
+import com.digou.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -29,8 +26,15 @@ public interface ManagerMapper {
 	ArrayList<Order>  searchOrderByTime(long start,long end);
 
 	ArrayList<SellerUser> sellerTop5Info();
-	ArrayList<Product> productTop10Info();
+	ArrayList<SellerUser> top5SellerApplyInfo();
 
+	ArrayList<Product> top10ProductApplyInfo();
+	ArrayList<Product> productTop10Info();
+	float profitRate();
+
+	void top10ProductApplyReject(int id);
+	void top5SellerApplyReject(int id);
+	void changeProfitRate(float rate);
 	void sellerToTop5(int id);
 	void sellerTop5Cancel(int id);
 	void productToTop10(int id);
