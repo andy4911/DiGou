@@ -22,6 +22,7 @@ import com.digou.mapper.AccountMapper;
 import com.digou.mapper.OrderMapper;
 import com.digou.mapper.ProductMapper;
 import com.digou.mapper.ShopcartMapper;
+import com.digou.mapper.ManagerMapper;
 
 import antlr.collections.impl.IntRange;
 
@@ -35,6 +36,8 @@ public class OrderService implements OrderIService {
 	private ProductMapper productMapper;
 	@Resource
 	private ShopcartMapper cartMapper;
+	@Resource
+	private ManagerMapper managerMapper;
 	
 	public Map<String, Object> makeOrder(int pID, int cID, int amount) {
 		Product product = productMapper.findByID(pID);
@@ -51,7 +54,8 @@ public class OrderService implements OrderIService {
 		order.pID = pID;
 		order.orderPrice = product.price *amount;
 		order.amount = amount;
-		float rate  = new Admin().profitrate;
+		System.out.println(  managerMapper.profitRate());
+		float rate  = (float ) managerMapper.profitRate();
 		order.adminProfit =order.orderPrice * rate;
 		orderMapper.insert(order);
 		cartMapper.delete(cID, pID);

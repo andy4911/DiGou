@@ -104,15 +104,15 @@ public class ManagerService {
 
     }
     public Map<String, Object> profitRate(HttpServletResponse response) {
-	    float profit =new Admin().profitrate;
+        float rate = managerMapper.profitRate();
         Map<String, Object> data = new HashMap<>();
-        data.put("profit", profit);
+        data.put("array", rate);
         return ResponseCommon.wrappedResponse(data, 101, null);
     }
 
     public Map<String,Object> changeProfitRate (HttpServletResponse response,float  rate)
     {
-        new Admin().profitrate = rate;
+        managerMapper.changeProfitRate(rate);
         return  ResponseCommon.wrappedResponse(null, 101, null);
     }
     public Map<String, Object> searchOrderByID(HttpServletResponse response,int orderID) {
@@ -128,6 +128,7 @@ public class ManagerService {
         return ResponseCommon.wrappedResponse(data, 101, null);
     }
 
+
     public Map<String, Object> sellerTop5Info(HttpServletResponse response) {
         ArrayList<SellerUser> sellerUsers = managerMapper.sellerTop5Info();
         Map<String, Object> data = new HashMap<>();
@@ -136,6 +137,11 @@ public class ManagerService {
     }
 
     public Map<String, Object> sellerToTop5(HttpServletResponse response, int id) {
+        ArrayList<SellerUser> sellerUsers =managerMapper.sellerTop5Info();
+        if(sellerUsers.size()>=5)
+        {
+            return ResponseCommon.wrappedResponse(null, 105, null);
+        }
         managerMapper.sellerToTop5(id);
         return ResponseCommon.wrappedResponse(null, 101, null);
     }
@@ -145,6 +151,7 @@ public class ManagerService {
         return ResponseCommon.wrappedResponse(null, 101, null);
     }
     public Map<String, Object> productTop10Info(HttpServletResponse response) {
+
         ArrayList<Product> products = managerMapper.productTop10Info();
         Map<String, Object> data = new HashMap<>();
         data.put("top10", products);
@@ -152,12 +159,39 @@ public class ManagerService {
     }
 
     public Map<String, Object> productToTop10(HttpServletResponse response, int id) {
+        ArrayList<Product> products = managerMapper.productTop10Info();
+        if(products.size()>=5)
+        {
+            return ResponseCommon.wrappedResponse(null, 105, null);
+        }
         managerMapper.productToTop10(id);
         return ResponseCommon.wrappedResponse(null, 101, null);
     }
 
     public Map<String, Object> productTop10Cancel(HttpServletResponse response, int id) {
         managerMapper.productTop10Cancel(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+    public Map<String, Object> top5SellerApplyInfo(HttpServletResponse response) {
+        ArrayList<SellerUser> sellerUsers = managerMapper.top5SellerApplyInfo();
+        Map<String, Object> data = new HashMap<>();
+        data.put("top5_apply", sellerUsers);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+
+    public Map<String, Object> top5SellerApplyReject(HttpServletResponse response, int id) {
+        managerMapper.top5SellerApplyReject(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+    public Map<String, Object> top10ProductApplyInfo(HttpServletResponse response) {
+        ArrayList<Product> products = managerMapper.top10ProductApplyInfo();
+        Map<String, Object> data = new HashMap<>();
+        data.put("top10_apply", products);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+
+    public Map<String, Object> top10ProductApplyReject(HttpServletResponse response, int id) {
+        managerMapper.top10ProductApplyReject(id);
         return ResponseCommon.wrappedResponse(null, 101, null);
     }
 /*

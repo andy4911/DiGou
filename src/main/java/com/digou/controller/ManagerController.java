@@ -113,6 +113,7 @@ public class ManagerController {
     public Map<String, Object> allSellerInfo(HttpServletResponse response) {
         return managerService.allSellerInfo(response);
     }
+
     @RequestMapping("/api/m/seller_top5_info")
     public Map<String, Object> sellerTop5Info(HttpServletResponse response) {
         return managerService.sellerTop5Info(response);
@@ -145,6 +146,25 @@ public class ManagerController {
                                                 @RequestParam(value = "id",required = true) int id) {
         return managerService.productTop10Cancel(response, id);
     }
+    @RequestMapping("/api/m/top5_seller_apply_info")
+    public Map<String, Object> top5SellerApplyInfo(HttpServletResponse response) {
+        return managerService.top5SellerApplyInfo(response);
+    }
+    @RequestMapping("/api/m/top5_seller_apply_reject")
+    public Map<String, Object> top5SellerApplyReject(HttpServletResponse response,
+                                                     @RequestParam(value = "id",required = true) int id) {
+        return managerService.top5SellerApplyReject(response,id);
+    }
+    @RequestMapping("/api/m/top10_product_apply_info")
+    public Map<String, Object> top10ProductApplyInfo(HttpServletResponse response) {
+        return managerService.top10ProductApplyInfo(response);
+    }
+    @RequestMapping("/api/m/top10_product_apply_reject")
+    public Map<String, Object> top10ProductApplyReject(HttpServletResponse response,
+                                                     @RequestParam(value = "id",required = true) int id) {
+        return managerService.top10ProductApplyReject(response,id);
+    }
+
     /*
     @RequestMapping("/api/b/register")
     public Map<String, Object> register(HttpServletResponse response,
