@@ -23,5 +23,8 @@ public interface SellerMapper {
 	//gwm
 	ArrayList<Order> allOrder(int id);
 	void refund(int orderId);
+	void sending(int orderId);
 	void modify(Product product);
+	ArrayList<Order> all_order_price(int id);
+	void delete(int pid);
 }

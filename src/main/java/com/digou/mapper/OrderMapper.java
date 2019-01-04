@@ -13,7 +13,5 @@ public interface OrderMapper {
 	public int insert(Order order);
 	
 	public ArrayList<Order> find(int cID);
-
-	public int updateStatus(int status, int orderID);
+	
 }
-

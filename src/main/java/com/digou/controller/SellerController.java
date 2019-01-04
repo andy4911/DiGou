@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
@@ -86,6 +88,12 @@ public class SellerController {
                                           @RequestParam(value="orderId",required = true) int orderId) {
         return sellerService.refund_order(response, orderId);
     }
+    //待发货、已发货
+    @RequestMapping("/api/b/order/send")
+    public Map<String, Object> send(HttpServletResponse response,
+                                            @RequestParam(value="orderId",required = true) int orderId) {
+        return sellerService.send_order(response, orderId);
+    }
 
     //修改商品信息
     @RequestMapping("/api/b/good/modify")
@@ -99,5 +107,19 @@ public class SellerController {
                                            @RequestParam(value = "portraitURL",required = true) String portraitURL
                                             ){
         return sellerService.good_modify(response,pID, pName,  description,  price,  portraitURL,  sID,  num);
+    }
+
+    //计算商家日、周、月、年及总收入
+    @RequestMapping("/api/b/income/all")
+    public Map<String, Object> income(HttpServletResponse response,
+                                   @RequestParam(value="id",required = true) int id){
+    return sellerService.caculate_income(response,id);
+    }
+
+    //下架商品
+    @RequestMapping("/api/b/good/delete")
+    public Map<String, Object> delete(HttpServletResponse response,
+                                        @RequestParam(value = "pId",required = true) int id) {
+        return sellerService.good_delete(response, id);
     }
 }
