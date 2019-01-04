@@ -5,14 +5,14 @@
 
     <!-- cUser -->
 	<insert id="insertUser" parameterType="com.digou.entity.SellerUser" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO Seller_User (url, telephone, shopName, nickname, description, major, password)
-		VALUE (#{url}, #{telephone}, #{shopName}, #{nickname}, #{description}, #{major}, #{password})
+		INSERT INTO Seller_User (url, telephone, shopName, nickname, description, major, password,isTop5)
+		VALUE (#{url}, #{telephone}, #{shopName}, #{nickname}, #{description}, #{major}, #{password},0)
 	</insert>
 
     <!-- cUser -->
 	<insert id="addGood" parameterType="com.digou.entity.Product">
-		INSERT INTO Product (pName, price, description, portraitURL, sID, num)
-		VALUE (#{pName}, #{price}, #{description}, #{portraitURL}, #{sID}, #{num})
+		INSERT INTO Product (pName, price, description, portraitURL, sID, num,isTop10)
+		VALUE (#{pName}, #{price}, #{description}, #{portraitURL}, #{sID}, #{num},0)
 	</insert>
 
     <update id="modifyUser" parameterType="com.digou.entity.SellerUser">

@@ -30,21 +30,19 @@
 		
 	
 	</resultMap> 
-	
 	<select id="find" parameterType="int" resultMap="OrderMap">
 		SELECT orderID, cID, Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL, isFinish, amount
 		FROM OrderForm RIGHT JOIN Product ON OrderForm.pID=Product.pID
 			 RIGHT JOIN Seller_User ON Product.sID=Seller_User.id
 		WHERE cID=#{0}
 	</select>
-	
+
 	<select id="findWithinTime" resultMap="OrderMap">
 		SELECT orderID, cID, Product.pID, pName, sID, shopName, OrderForm.createTime, orderPrice, Product.description, price, num, portraitURL, isFinish, amount
 		FROM OrderForm RIGHT JOIN Product ON OrderForm.pID=Product.pID
 			 RIGHT JOIN Seller_User ON Product.sID=Seller_User.id
 		WHERE cID=#{cID} AND OrderForm.createTime &gt; #{begin} AND OrderForm.createTime &lt; #{end}
 	</select>
-	
 	<update id="updateStatus" parameterType="int">
 		UPDATE OrderForm SET isFinish=#{status} WHERE orderID=#{orderID}
 	</update>

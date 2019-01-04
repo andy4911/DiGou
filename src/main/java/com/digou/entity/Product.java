@@ -15,6 +15,7 @@ public class Product extends BaseEntity {
 	public int isFinish;
 	public int number = 1;
 	public int orderID;
+	public int isTop10;
 
 	public Product(){
     }
@@ -26,6 +27,7 @@ public class Product extends BaseEntity {
 		this.portraitURL = portraitURL;
 		this.sID = sID;
 		this.num = num;
+		this.isTop10 =0;
 	}
 	public void setPId(int pid) {
 		this.pID = pid;

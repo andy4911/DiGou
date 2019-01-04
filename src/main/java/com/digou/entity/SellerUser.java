@@ -22,6 +22,7 @@ public class SellerUser {
     private String description;
     private String major;
     private String password;
+    public int isTop5;
 
     /**
      * url : http://lc-tp28gntm.cn-n1.lcfile.com/d2477ef0b23ec61b963f.jpg
@@ -45,6 +46,7 @@ public class SellerUser {
         this.description = description;
         this.major = major;
         this.password = password;
+        this.isTop5 = 0;
     }
 
     public String getUrl() {
