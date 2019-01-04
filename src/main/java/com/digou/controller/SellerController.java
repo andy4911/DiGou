@@ -120,4 +120,13 @@ public class SellerController {
                                       @RequestParam(value = "pId",required = true) int id) {
         return sellerService.good_delete(response, id);
     }
+
+    //选择物流公司
+    @RequestMapping("/api/b/logistics/select")
+    public Map<String, Object>  logistics(HttpServletResponse response,
+                                         @RequestParam(value = "orderId",required = true) int orderId,
+                                         @RequestParam(value = "company",required = true) String company,
+                                         @RequestParam(value = "point",required = true) String point){
+        return sellerService.logistics_select(response,orderId,company,point);
+    }
 }

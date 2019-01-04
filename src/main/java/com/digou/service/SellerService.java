@@ -244,6 +244,13 @@ public class SellerService {
 		return ResponseCommon.wrappedResponse(null, 101, null);
 	}
 
+	//物流
+	public Map<String, Object> logistics_select(HttpServletResponse response, int orderId,String company,String point) {
+		sellerMapper.select_logistics(orderId,company,point);
+		//System.out.println("this is a test!");
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	}
+
 	//k月前
 	public static long Time_13m_ago(long time,int k) {
 		//float yea_month,year;
