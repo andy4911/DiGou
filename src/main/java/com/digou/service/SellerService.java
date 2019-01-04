@@ -1,10 +1,7 @@
 package com.digou.service;
 
 import com.digou.common.ResponseCommon;
-import com.digou.entity.Order;
-import com.digou.entity.Product;
-import com.digou.entity.SellerUser;
-import com.digou.entity.income;
+import com.digou.entity.*;
 import com.digou.mapper.SellerMapper;
 import org.omg.CORBA.BAD_INV_ORDER;
 import org.springframework.context.annotation.ComponentScan;
@@ -33,13 +30,14 @@ public class SellerService {
 										String major,
 										String description,
 										String nickname,
-										String password) {
+										String password,
+										String email) {
 		//检查
     	if (sellerMapper.findUser(telephone) != null) {
     		return ResponseCommon.wrappedResponse(null, 102, null);
 		}
 		//插入
-    	SellerUser user = new SellerUser(url, telephone, shopName, nickname, description, major, password);
+    	SellerUser user = new SellerUser(url, telephone, shopName, nickname, description, major, password,email);
     	int result = sellerMapper.insertUser(user);
     	if (result != 1) {
 			return ResponseCommon.wrappedResponse(null, 106, null);
@@ -62,9 +60,11 @@ public class SellerService {
 		}
     }
 
-	public Map<String, Object> info_modify(HttpServletResponse response, int id,String url,String telephone,String shopName,String major,String description,String nickname) {
+	public Map<String, Object> info_modify(HttpServletResponse response,
+										   int id, String url, String telephone, String shopName,
+										   String major, String description, String nickname, String email) {
 		//插入
-		SellerUser user = new SellerUser(url, telephone, shopName, nickname, description, major, "");
+		SellerUser user = new SellerUser(url, telephone, shopName, nickname, description, major, "", email);
 		user.setId(id);
 		sellerMapper.modifyUser(user);
 		return ResponseCommon.wrappedResponse(null, 101, null);
@@ -134,7 +134,7 @@ public class SellerService {
 	//计算商家日、周、月、年及总收入
 	public Map<String, Object> caculate_income(HttpServletResponse response,
 											   int id){
-		long time_now_to_create=0,time_30d_ago=0,time_20w_ago=0,time_13m_ago=0;
+		long time_now_to_create=0, time_30d_ago=0, time_20w_ago=0, time_13m_ago=0, time_5y_ago=0;
 		long day=24*60*60*1000L;
 		float income_1=0,income_7=0,income_30=0,income_365=0,income_all=0;
 		ArrayList<Order> orders_price = sellerMapper.all_order_price(id);
@@ -172,7 +172,9 @@ public class SellerService {
 			//计算拥有收入的时间
 			time_30d_ago = Time_30d_ago(time);
 			time_20w_ago = Time_20w_ago(time);
-			//time_13m_ago=Time_13m_ago(time,12);//向前12个月，就是最近13个月
+			time_13m_ago=Time_13m_ago(time,12);//向前12个月，就是最近13个月
+			time_5y_ago=Time_5y_ago(time,4);//现在2019  四年前2015
+
 			//如果在前30天之内
 			if (orders_price.get(i).createTime > time_30d_ago) {
 				int j = (int) ((orders_price.get(i).createTime - time_30d_ago) / (1 * day));
@@ -190,16 +192,34 @@ public class SellerService {
 			if(orders_price.get(i).createTime > time_13m_ago){
 				//int j= (int) ((orders_price.get(i).createTime - time_13m_ago) / (30*day));
 				int j=0;
-				for (int k = 1; k <= 12; k++) {//
-					if( (orders_price.get(i).createTime >= Time_13m_ago(time,0)) &&(orders_price.get(i).createTime < time) ){
-						j=12;
-					}
-					else if((orders_price.get(i).createTime >= Time_13m_ago(time,k)) && (orders_price.get(i).createTime < Time_13m_ago(time,k-1))){
-						j=12-k;
+				if( (orders_price.get(i).createTime >= Time_13m_ago(time,0)) &&(orders_price.get(i).createTime < time) ){
+					j=12;
+				}else {
+					for (int k = 1; k <= 12; k++) {
+						if ((orders_price.get(i).createTime >= Time_13m_ago(time, k)) && (orders_price.get(i).createTime < Time_13m_ago(time, k - 1))) {
+							j = 12 - k;
+						}
 					}
 				}
 				my.this_month_income[j] += profit;
 			}
+
+			//如果在最近5年内
+			if(orders_price.get(i).createTime > time_5y_ago){
+				int j=0;
+				if ((orders_price.get(i).createTime >= Time_5y_ago(time,0)) &&(orders_price.get(i).createTime < time)){
+					j=4;
+				}else {
+					for (int k = 1; k <= 4; k++) {
+
+						if ((orders_price.get(i).createTime >= Time_5y_ago(time, k)) && (orders_price.get(i).createTime < Time_5y_ago(time, k - 1))) {
+							j = 4 - k;
+						}
+					}
+				}
+				my.this_year_income[j] += profit;
+			}
+
 		}
 
 		//my.this_day_income[0]=111;
@@ -231,6 +251,14 @@ public class SellerService {
 				mon--;
 			}
 		}
+
+		int yea=Integer.parseInt(timetoDate(time,2));
+		for (int j = 4; j >= 0 ; j--) {
+			my.year_Date[j] = yea;
+			yea--;
+		}
+
+
 		all_income.add(my);
 
 		Map<String, Object> data = new HashMap<>();
@@ -251,11 +279,44 @@ public class SellerService {
 		return ResponseCommon.wrappedResponse(null, 101, null);
 	}
 
-	//k月前
+	//申请广告
+	public Map<String, Object> apply_advertises(HttpServletResponse response, int sId,int pId){
+		sellerMapper.apply_ads(sId,pId);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	}
+
+	//显示评论
+	public Map<String,Object> comment(HttpServletResponse response, int pId){
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+		comments = sellerMapper.comment(pId);
+		for (int i = 0; i < comments.size(); i++) {
+			comments.get(i).Date=timetoDate(comments.get(i).createTime,1);
+		}
+
+		Map<String,Object> data=new HashMap<>();
+		data.put("comments",comments);
+		return ResponseCommon.wrappedResponse(data, 101, null);
+	}
+	/**
+	 * 以下为辅助函数部分
+	 */
+	//k年前的准确时间
+	public static long Time_5y_ago(long time,int k){
+		long new_time=time;
+		String now_date=timetoDate(time,2);//获取年份
+		int i=Integer.parseInt(now_date);//转换类型计算
+
+		i -= k;
+		now_date=String.valueOf(i)+"-01-01 00:00:00";
+		new_time=Long.parseLong(dateToStamp(now_date));
+
+		return new_time;
+	}
+	//k月前的准确时间
 	public static long Time_13m_ago(long time,int k) {
 		//float yea_month,year;
 		long new_time;
-		String new_date,now_date;
+		String new_date, now_date;
 		now_date = timetoDate(time,6);//y-m
 		new_date = now_date+"-01 00:00:00";
 

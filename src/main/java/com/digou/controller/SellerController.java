@@ -33,8 +33,9 @@ public class SellerController {
                                         @RequestParam(value = "major",required = true) String major,
                                         @RequestParam(value = "description",required = true) String description,
                                         @RequestParam(value = "nickname",required = true) String nickname,
-                                        @RequestParam(value = "password",required = true) String password) {
-        return sellerService.register(response, url, telephone, shopName, major, description, nickname, password);
+                                        @RequestParam(value = "password",required = true) String password,
+                                        @RequestParam(value = "email",required = true) String email) {
+        return sellerService.register(response, url, telephone, shopName, major, description, nickname, password,email);
     }
 
     @RequestMapping("/api/b/info/get")
@@ -51,8 +52,9 @@ public class SellerController {
                                         @RequestParam(value = "shopName",required = true) String shopName,
                                         @RequestParam(value = "major",required = true) String major,
                                         @RequestParam(value = "description",required = true) String description,
-                                        @RequestParam(value = "nickname",required = true) String nickname) {
-        return sellerService.info_modify(response, id, url, telephone, shopName, major, description, nickname);
+                                        @RequestParam(value = "nickname",required = true) String nickname,
+                                        @RequestParam(value = "email",required = true) String email) {
+        return sellerService.info_modify(response, id, url, telephone, shopName, major, description, nickname, email);
     }
 
     @RequestMapping("/api/b/good/add")
@@ -103,6 +105,7 @@ public class SellerController {
                                            @RequestParam(value = "description",required = true) String description,
                                            @RequestParam(value = "price",required = true) float price,
                                            @RequestParam(value = "portraitURL",required = true) String portraitURL
+                                           
     ){
         return sellerService.good_modify(response,pID, pName,  description,  price,  portraitURL,  sID,  num);
     }
@@ -128,5 +131,21 @@ public class SellerController {
                                          @RequestParam(value = "company",required = true) String company,
                                          @RequestParam(value = "point",required = true) String point){
         return sellerService.logistics_select(response,orderId,company,point);
+    }
+
+    //申请广告
+    @RequestMapping("/api/b/advertises")
+    public Map<String, Object>  advertises(HttpServletResponse response,
+                                          @RequestParam(value = "sId",required = true) int sId,
+                                          @RequestParam(value = "pId",required = true) int pId){
+        System.out.println("advertise");
+        return sellerService.apply_advertises(response,sId,pId);
+    }
+
+    //评论
+    @RequestMapping("/api/b/comment")
+    public Map<String,Object> comment(HttpServletResponse response,
+                                      @RequestParam(value = "pId",required = true) int pId){
+        return sellerService.comment(response,pId);
     }
 }

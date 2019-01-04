@@ -1,5 +1,6 @@
 package com.digou.mapper;
 
+import com.digou.entity.Comment;
 import com.digou.entity.Order;
 import com.digou.entity.Product;
 import com.digou.entity.SellerUser;
@@ -30,4 +31,6 @@ public interface SellerMapper {
 	void delete(int pid);
 	void select_logistics( @Param("id")int orderId, @Param("com") String company, String point);
 	//@Param("po")
+	void apply_ads(int sId,int pId);
+	ArrayList<Comment> comment(int pId);
 }
