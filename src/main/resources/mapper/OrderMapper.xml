@@ -29,7 +29,7 @@
 		<result column="price" jdbcType="INTEGER" property="product.price" />
 		
 	
-	</resultMap> 
+	</resultMap>
 	<select id="find" parameterType="int" resultMap="OrderMap">
 		SELECT orderID, cID, Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL, isFinish, amount
 		FROM OrderForm RIGHT JOIN Product ON OrderForm.pID=Product.pID
