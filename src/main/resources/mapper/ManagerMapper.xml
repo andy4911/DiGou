@@ -11,6 +11,12 @@
     <select id="findAll" resultType="com.digou.entity.Product">
         SELECT * FROM Product LIMIT #{origin},#{length}
     </select>-->
+
+    <select id="searchOderByID"  resultType="com.digou.entity.Order">
+        select * FROM OrderForm where orderID = #{orderID}
+
+    </select>
+
     <select id="dayOrder" resultType="com.digou.entity.Order">
         select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
 
@@ -19,6 +25,7 @@
         select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
 
     </select>
+
     <select id="yearOrder" resultType="com.digou.entity.Order">
         select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
 

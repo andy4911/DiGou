@@ -118,6 +118,13 @@ public class ManagerController {
         return managerService.changeProfitRate( response,rate);
 
     }
+    @RequestMapping("/api/m/search_order")
+    public Map<String,Object> searchOrder(HttpServletResponse response,
+                                               @RequestParam(value  = "orderID",required = true) int  orderID ){
+        System.out.println("ffff");
+        return managerService.searchOderByID( response,orderID);
+
+    }
 
 
 

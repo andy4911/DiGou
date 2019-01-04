@@ -175,6 +175,12 @@ public class ManagerService {
         new Admin().profitrate = rate;
         return  ResponseCommon.wrappedResponse(null, 101, null);
     }
+    public Map<String, Object> searchOderByID(HttpServletResponse response,int orderID) {
+        ArrayList<Order> sellerUsers = managerMapper.searchOderByID(orderID);
+        Map<String, Object> data = new HashMap<>();
+        data.put("order", sellerUsers);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
 
 /*
 	public Map<String, Object> info_get(HttpServletResponse response, int id) {
