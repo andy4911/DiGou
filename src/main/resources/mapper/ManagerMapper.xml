@@ -12,6 +12,32 @@
         SELECT * FROM Product LIMIT #{origin},#{length}
     </select>-->
 
+    <select id="searchOderByID"  resultType="com.digou.entity.Order">
+        select * FROM OrderForm where orderID = #{orderID}
+
+    </select>
+
+    <select id="dayOrder" resultType="com.digou.entity.Order">
+        select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
+
+    </select>
+    <select id="monthOrder" resultType="com.digou.entity.Order">
+        select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
+
+    </select>
+
+    <select id="yearOrder" resultType="com.digou.entity.Order">
+        select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
+
+    </select>
+    <select id="weekOrder" resultType="com.digou.entity.Order">
+        select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
+
+    </select>
+    <select id="allOrder" resultType="com.digou.entity.Order">
+        SELECT * FROM OrderForm
+    </select>
+
     <select id="customerBlackInfo" resultType="com.digou.entity.CUser">
         SELECT * FROM  CUser WHERE isBlack=1
     </select>

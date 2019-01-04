@@ -30,7 +30,6 @@ public class OrderController {
     	return orderService.makeOrder(pID, cID);
     } 
     
-    
     @RequestMapping("/api/c/lookupOrders")  
     public Map<String, Object> lookupOrders(HttpServletResponse response, 
             @RequestParam(value = "cID", required = true) int cID){
@@ -38,4 +37,9 @@ public class OrderController {
     } 
 
 
+    @RequestMapping("/api/c/confirmOrder")  
+    public Map<String, Object> confirm(HttpServletResponse response, 
+            @RequestParam(value = "orderID", required = true) int orderID){
+    	return orderService.confirm(orderID);
+    } 
 }

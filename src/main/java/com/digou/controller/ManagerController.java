@@ -78,6 +78,54 @@ public class ManagerController {
                                                 @RequestParam(value = "id",required = true) int id) {
         return managerService.customerWhiteBlock(response, id);
     }
+    @RequestMapping("/api/m/all_order")
+    public Map<String,Object> allOrder(HttpServletResponse response){
+        return managerService.allOrder(response);
+    }
+    @RequestMapping("/api/m/day_order")
+    public Map<String,Object> dayOrder(HttpServletResponse response,
+                                       @RequestParam(value  = "year",required = true) int year ,
+                                       @RequestParam(value  = "month",required = true) int month ,
+                                       @RequestParam(value  = "day",required = true) int day ){
+        return managerService.dayOrder(response,year, month,day);
+
+    }
+    @RequestMapping("/api/m/month_order")
+    public Map<String,Object> monthOrder(HttpServletResponse response,
+                                       @RequestParam(value  = "year",required = true) int year ,
+                                       @RequestParam(value  = "month",required = true) int month ){
+        return managerService.monthOrder( response,year, month);
+
+    }
+    @RequestMapping("/api/m/year_order")
+    public Map<String,Object> yearOrder(HttpServletResponse response,
+                                       @RequestParam(value  = "year",required = true) int year ){
+        return managerService.yearOrder( response,year);
+
+    }
+    @RequestMapping("/api/m/week_order")
+    public Map<String,Object> weekOrder(HttpServletResponse response,
+                                        @RequestParam(value  = "year",required = true) int year,
+                                        @RequestParam(value  = "month",required = true) int month ,
+                                        @RequestParam(value  = "day",required = true) int day ,
+                                        @RequestParam(value = "days", required = true)int days){
+        return managerService.weekOrder( response,year,month,day ,days);
+
+    }
+    @RequestMapping("/api/m/change_profit_rate")
+    public Map<String,Object> changeProfitRate(HttpServletResponse response,
+                                        @RequestParam(value  = "rate",required = true) float rate ){
+        return managerService.changeProfitRate( response,rate);
+
+    }
+    @RequestMapping("/api/m/search_order")
+    public Map<String,Object> searchOrder(HttpServletResponse response,
+                                               @RequestParam(value  = "orderID",required = true) int  orderID ){
+        System.out.println("ffff");
+        return managerService.searchOderByID( response,orderID);
+
+    }
+
 
 
     /*

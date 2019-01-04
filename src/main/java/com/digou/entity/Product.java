@@ -11,9 +11,13 @@ public class Product extends BaseEntity {
 	public int num;
 	public float price;
 	public String portraitURL;
-	//public int isFinish;//判断货物信息
-	public Product(){
 
+	//public int isFinish;//判断货物信息
+	public long createTime;
+	public int isFinish;
+	public int number = 1;
+	public int orderID;
+	public Product(){
     }
 
 	public Product(String pName, String description, float price, String portraitURL, int sID, int num) {

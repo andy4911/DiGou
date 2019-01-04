@@ -4,12 +4,37 @@
 <mapper namespace="com.digou.mapper.OrderMapper">  
 
 	<insert id="insert" parameterType="com.digou.entity.Order" useGeneratedKeys="true" keyProperty="orderID">
-		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice)
-		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice})
+		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount,adminProfit)
+		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount},#{adminProfit})
 	</insert>
 	
-	<select id="find" resultType="com.digou.entity.Order">
-		SELECT * FROM OrderForm WHERE cID=#{0}
+	<resultMap id="OrderMap" type="com.digou.entity.Order">
+    	<result column="cID" jdbcType="INTEGER" property="cID" />
+    	<result column="pID" jdbcType="INTEGER" property="pID" />
+		<result column="createTime" jdbcType="INTEGER" property="createTime" />
+		<result column="orderPrice" jdbcType="REAL" property="orderPrice" />
+		<result column="pID" jdbcType="INTEGER" property="product.pID" />
+		<result column="isFinish" jdbcType="INTEGER" property="isFinish" />
+		<result column="amount" jdbcType="INTEGER" property="amount" />
+		<result column="adminProfit" jdbcType="REAL" property="adminProfit" />
+
+		
+		<result column="pID" jdbcType="INTEGER" property="product.pID" />
+		<result column="pName" jdbcType="VARCHAR" property="product.pName" />
+		<result column="num" jdbcType="INTEGER" property="product.num" />
+		<result column="sID" jdbcType="INTEGER" property="product.sID" />
+		<result column="shopName" jdbcType="VARCHAR" property="product.shopName" />
+		<result column="description" jdbcType="VARCHAR" property="product.description" />
+		<result column="portraitURL" jdbcType="VARCHAR" property="product.portraitURL" />
+		<result column="price" jdbcType="INTEGER" property="product.price" />
+		
+	
+	</resultMap> 
+	<select id="find" parameterType="int" resultMap="OrderMap">
+		SELECT orderID, cID, Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL, isFinish, amount
+		FROM OrderForm RIGHT JOIN Product ON OrderForm.pID=Product.pID
+			 RIGHT JOIN Seller_User ON Product.sID=Seller_User.id
+		WHERE cID=#{0}
 	</select>
 	
 </mapper>

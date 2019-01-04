@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import javax.annotation.Resource;
 
+import com.digou.entity.Admin;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,10 @@ public class OrderService implements OrderIService {
 		Order order = new Order();
 		order.cID = cID;
 		order.pID = pID;
-		order.orderPrice = product.price;
+		order.orderPrice = product.price *amount;
+		order.amount = amount;
+		float rate  = new Admin().profitrate;
+		order.adminProfit =order.orderPrice * rate;
 		orderMapper.insert(order);
 		cartMapper.delete(cID, pID);
 		
@@ -73,4 +77,13 @@ public class OrderService implements OrderIService {
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 
+	public Map<String, Object> refund(int orderID) {
+		int r = orderMapper.updateStatus(0, orderID);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	} 
+	
+	public Map<String, Object> confirm(int orderID) {
+		int r = orderMapper.updateStatus(2, orderID);
+		return ResponseCommon.wrappedResponse(null, 101, null);
+	} 
 }

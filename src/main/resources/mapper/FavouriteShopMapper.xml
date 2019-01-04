@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!-- 指定工作空间，要与接口名相同，源代码没有去看，猜测应该是通过"这里的namespace.下边方法的id"来定位方法的 -->  
+<mapper namespace="com.digou.mapper.FavouriteShopMapper">
+
+	<insert id="insert" parameterType="com.digou.entity.SellerUser">
+		INSERT INTO FavouriteShop (cID, sID, createTime)
+		VALUE (#{cID}, #{sID}, #{createTime})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM FavouriteShop WHERE cID=#{cID} AND sID=#{sID}
+	</delete>
+	
+	<select id="find" parameterType="int" resultType="SellerUser">
+		SELECT *
+		FROM FavouriteShop LEFT JOIN Seller_User ON FavouriteShop.sID=Seller_User.id
+		WHERE FavouriteShop.cID=#{0}
+	</select>
+</mapper>

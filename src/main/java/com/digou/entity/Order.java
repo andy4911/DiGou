@@ -31,4 +31,6 @@ public class Order extends BaseEntity {
 	 */
 	//public int isDelete;//判断下架
 
+	public Product product;
+	public float adminProfit;
 }
