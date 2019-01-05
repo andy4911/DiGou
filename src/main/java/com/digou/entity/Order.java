@@ -19,6 +19,9 @@ public class Order extends BaseEntity {
 	public String portraitURL;
 	public String username;
 	public String address;
+	public String cName;
+	public String shopName;
+	public String sellerName;
 	/** isFinissh
 	 * 1 未发货
 	 * 0 订单失败（退款）
@@ -33,6 +36,7 @@ public class Order extends BaseEntity {
 	 */
 	//public int isDelete;//判断下架
 	//gwm以上
+
 }
 
 

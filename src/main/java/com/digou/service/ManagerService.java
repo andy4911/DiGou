@@ -1,10 +1,7 @@
 package com.digou.service;
 
 import com.digou.common.ResponseCommon;
-import com.digou.entity.Admin;
-import com.digou.entity.CUser;
-import com.digou.entity.Order;
-import com.digou.entity.SellerUser;
+import com.digou.entity.*;
 import com.digou.mapper.ManagerMapper;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
@@ -98,90 +95,105 @@ public class ManagerService {
         data.put("array", orders);
         return ResponseCommon.wrappedResponse(data, 101, null);
     }
-    public Map<String,Object> dayOrder(HttpServletResponse response,int year,int month,int day){
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(year,month-1,day,0,0,0);
-        long start = calendar1.getTimeInMillis();
-        System.out.println("start day is "+start);
-
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(year,month-1,day+1,0,0,0);
-        long end = calendar2.getTimeInMillis();
-        System.out.println("end day is "+end);
-
-	    ArrayList<Order> orders = managerMapper.dayOrder(start,end);
+        public Map<String,Object> searchOrderByTime(HttpServletResponse response,long start,long end){
+	    ArrayList<Order> orders = managerMapper.searchOrderByTime(start,end);
         Map<String, Object> data = new HashMap<>();
         data.put("array", orders);
 
         return ResponseCommon.wrappedResponse(data, 101, null);
 
     }
-    public Map<String,Object> monthOrder(HttpServletResponse response,int year,int month){
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(year,month-1,0,0,0,0);
-        long start = calendar1.getTimeInMillis();
-        System.out.println("start month is "+start);
-
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(year,month,0,0,0,0);
-        long end = calendar2.getTimeInMillis();
-        System.out.println("end month is "+end);
-
-        ArrayList<Order> orders = managerMapper.monthOrder(start,end);
+    public Map<String, Object> profitRate(HttpServletResponse response) {
+        float rate = managerMapper.profitRate();
         Map<String, Object> data = new HashMap<>();
-        data.put("array", orders);
-
+        data.put("array", rate);
         return ResponseCommon.wrappedResponse(data, 101, null);
-
     }
-    public Map<String,Object> yearOrder(HttpServletResponse response,int year){
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(year,0,0,0,0,0);
-        long start = calendar1.getTimeInMillis();
-        System.out.println("start year is "+start);
 
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(year+1,0,0,0,0,0);
-        long end = calendar2.getTimeInMillis();
-        System.out.println("end year is "+end);
-
-        ArrayList<Order> orders = managerMapper.yearOrder(start,end);
-        Map<String, Object> data = new HashMap<>();
-        data.put("array", orders);
-
-        return ResponseCommon.wrappedResponse(data, 101, null);
-
-    }
-    public Map<String,Object> weekOrder(HttpServletResponse response,int year,int month,int day,int days){
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(year,month-1,day,0,0,0);
-        long start = calendar1.getTimeInMillis();
-        System.out.println("start week is "+start);
-
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.set(year,month-1,day+days,0,0,0);
-        long end = calendar2.getTimeInMillis();
-        System.out.println("end week is "+end);
-
-        ArrayList<Order> orders = managerMapper.weekOrder(start,end);
-        Map<String, Object> data = new HashMap<>();
-        data.put("array", orders);
-
-        return ResponseCommon.wrappedResponse(data, 101, null);
-
-    }
     public Map<String,Object> changeProfitRate (HttpServletResponse response,float  rate)
     {
-        new Admin().profitrate = rate;
+        managerMapper.changeProfitRate(rate);
         return  ResponseCommon.wrappedResponse(null, 101, null);
     }
-    public Map<String, Object> searchOderByID(HttpServletResponse response,int orderID) {
-        ArrayList<Order> sellerUsers = managerMapper.searchOderByID(orderID);
+    public Map<String, Object> searchOrderByID(HttpServletResponse response,int orderID) {
+        ArrayList<Order> orders = managerMapper.searchOrderByID(orderID);
         Map<String, Object> data = new HashMap<>();
-        data.put("order", sellerUsers);
+        data.put("order", orders);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+    public Map<String, Object> allSellerInfo(HttpServletResponse response) {
+        ArrayList<SellerUser> sellerUsers = managerMapper.allSellerInfo();
+        Map<String, Object> data = new HashMap<>();
+        data.put("all", sellerUsers);
         return ResponseCommon.wrappedResponse(data, 101, null);
     }
 
+
+    public Map<String, Object> sellerTop5Info(HttpServletResponse response) {
+        ArrayList<SellerUser> sellerUsers = managerMapper.sellerTop5Info();
+        Map<String, Object> data = new HashMap<>();
+        data.put("top5", sellerUsers);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+
+    public Map<String, Object> sellerToTop5(HttpServletResponse response, int id) {
+        ArrayList<SellerUser> sellerUsers =managerMapper.sellerTop5Info();
+        if(sellerUsers.size()>=5)
+        {
+            return ResponseCommon.wrappedResponse(null, 105, null);
+        }
+        managerMapper.sellerToTop5(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+
+    public Map<String, Object> sellerTop5Cancel(HttpServletResponse response, int id) {
+        managerMapper.sellerTop5Cancel(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+    public Map<String, Object> productTop10Info(HttpServletResponse response) {
+
+        ArrayList<Product> products = managerMapper.productTop10Info();
+        Map<String, Object> data = new HashMap<>();
+        data.put("top10", products);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+
+    public Map<String, Object> productToTop10(HttpServletResponse response, int id) {
+        ArrayList<Product> products = managerMapper.productTop10Info();
+        if(products.size()>=5)
+        {
+            return ResponseCommon.wrappedResponse(null, 105, null);
+        }
+        managerMapper.productToTop10(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+
+    public Map<String, Object> productTop10Cancel(HttpServletResponse response, int id) {
+        managerMapper.productTop10Cancel(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+    public Map<String, Object> top5SellerApplyInfo(HttpServletResponse response) {
+        ArrayList<SellerUser> sellerUsers = managerMapper.top5SellerApplyInfo();
+        Map<String, Object> data = new HashMap<>();
+        data.put("top5_apply", sellerUsers);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+
+    public Map<String, Object> top5SellerApplyReject(HttpServletResponse response, int id) {
+        managerMapper.top5SellerApplyReject(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+    public Map<String, Object> top10ProductApplyInfo(HttpServletResponse response) {
+        ArrayList<Product> products = managerMapper.top10ProductApplyInfo();
+        Map<String, Object> data = new HashMap<>();
+        data.put("top10_apply", products);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
+
+    public Map<String, Object> top10ProductApplyReject(HttpServletResponse response, int id) {
+        managerMapper.top10ProductApplyReject(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
 /*
 	public Map<String, Object> info_get(HttpServletResponse response, int id) {
 		//检查

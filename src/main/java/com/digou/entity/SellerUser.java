@@ -22,6 +22,8 @@ public class SellerUser {
     private String description;
     private String major;
     private String password;
+    //gwm
+    private String email;
 
     /**
      * url : http://lc-tp28gntm.cn-n1.lcfile.com/d2477ef0b23ec61b963f.jpg
@@ -37,7 +39,7 @@ public class SellerUser {
     }
 
 
-    public SellerUser(String url, String telephone, String shopName, String nickname, String description, String major, String password) {
+    public SellerUser(String url, String telephone, String shopName, String nickname, String description, String major, String password, String email) {
         this.url = url;
         this.telephone = telephone;
         this.shopName = shopName;
@@ -45,7 +47,12 @@ public class SellerUser {
         this.description = description;
         this.major = major;
         this.password = password;
+        this.email = email;
     }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
 
     public String getUrl() {
         return url;

@@ -11,31 +11,95 @@
     <select id="findAll" resultType="com.digou.entity.Product">
         SELECT * FROM Product LIMIT #{origin},#{length}
     </select>-->
+    <update id="top10ProductApplyReject" parameterType="int">
+        update Product set isTop10 =-2 where  pID=#{id}
+    </update>
+    <select id="top10ProductApplyInfo" resultType="com.digou.entity.Product" >
+        SELECT * FROM Product WHERE isTop10 = -1
+    </select>
 
-    <select id="searchOderByID"  resultType="com.digou.entity.Order">
-        select * FROM OrderForm where orderID = #{orderID}
+    <update id="top5SellerApplyReject" parameterType="int">
+        update Seller_User set isTop5 =-2 where  id=#{id}
+    </update>
+    <select id="top5SellerApplyInfo" resultType="com.digou.entity.SellerUser" >
+        SELECT * FROM Seller_User WHERE isTop5 = -1
+    </select>
+
+    <select id="productTop10Info"  resultType="com.digou.entity.Product">
+        select * FROM Product WHERE isTop10 =1 AND isDelete =0
+    </select>
+
+    <update id="productToTop10" parameterType="int" >
+        update Product set isTop10 =1 where pID =#{id}
+    </update>
+
+    <update id="productTop10Cancel" parameterType="int">
+        update Product set isTop10 =0 where   pID=#{id}
+    </update>
+
+    <select id="allSellerInfo" resultType="com.digou.entity.SellerUser">
+        select * from Seller_User WHERE isPass =1 AND isBlack =0
+    </select>
+
+    <select id="sellerTop5Info"  resultType="com.digou.entity.SellerUser">
+        SELECT *  FROM Seller_User WHERE isTop5 = 1 AND isBlack =0
+    </select>
+
+    <update id="sellerToTop5" parameterType="int" >
+        update Seller_User set isTop5 =1 where id =#{id}
+    </update>
+    <update id="sellerTop5Cancel" parameterType="int">
+        update Seller_User set isTop5 =0 where  id=#{id}
+    </update>
+
+
+    <update id="changeProfitRate" parameterType="float">
+        UPDATE Admin SET profitRate=#{rate}
+    </update>
+    <select id="profitRate" resultType="float" >
+        select profitRate FROM  Admin
+    </select>
+
+    <resultMap id="OrderMap" type="com.digou.entity.Order">
+        <result column="orId" jdbcType="INTEGER" property="orderID"/>
+        <result column="cID" jdbcType="INTEGER" property="cID" />
+        <result column="pID" jdbcType="INTEGER" property="pID" />
+        <result column="createTime" jdbcType="INTEGER" property="createTime" />
+        <result column="Price" jdbcType="REAL" property="orderPrice" />
+        <result column="isFinish" jdbcType="INTEGER" property="isFinish" />
+        <result column="amount" jdbcType="INTEGER" property="amount" />
+        <result column="adminProfit" jdbcType="REAL" property="adminProfit" />
+        <result column="shopName" jdbcType="CHAR" property="shopName"/>
+        <result column="pName" jdbcType="CHAR" property="pName"/>
+        <result column="pUrl" jdbcType="CHAR" property="portraitURL"/>
+        <result column="cname" jdbcType="CHAR" property="cName"/>
+        <result column="sellerName" jdbcType="CHAR" property="sellerName"/>
+    </resultMap>
+
+    <select id="searchOrderByID"  resultMap="OrderMap">
+        SELECT OrderForm.orderID AS orId , OrderForm.cID AS cID,  OrderForm.pID AS pID, OrderForm.orderPrice AS Price,
+		 OrderForm.createTime AS createTime,OrderForm.amount AS  amount, OrderForm.isFinish AS isFinish,
+		 OrderForm.adminProfit AS adminProfit,  Seller_User.shopName AS shopName, Product.pName AS pName,
+         Product.portraitURL AS pUrl, CUser.nickname AS cname,Seller_User.nickname AS sellerName
+        FROM  (OrderForm LEFT JOIN Product ON (OrderForm.pID =Product.pID) LEFT JOIN Seller_User ON ( Product.sID = Seller_User.id) )LEFT JOIN CUser ON ( OrderForm.cID = CUser.userID) where orderID = #{orderID}
 
     </select>
 
-    <select id="dayOrder" resultType="com.digou.entity.Order">
-        select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
 
-    </select>
-    <select id="monthOrder" resultType="com.digou.entity.Order">
-        select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
+    <select id="searchOrderByTime"  resultMap="OrderMap">
+		SELECT OrderForm.orderID AS orId , OrderForm.cID AS cID,  OrderForm.pID AS pID, OrderForm.orderPrice AS Price,
+		 OrderForm.createTime AS createTime,OrderForm.amount AS  amount, OrderForm.isFinish AS isFinish,
+		 OrderForm.adminProfit AS adminProfit,  Seller_User.shopName AS shopName, Product.pName AS pName,
+         Product.portraitURL AS pUrl, CUser.nickname AS cname,Seller_User.nickname AS sellerName
+        FROM  (OrderForm LEFT JOIN Product ON (OrderForm.pID =Product.pID) LEFT JOIN Seller_User ON ( Product.sID = Seller_User.id) )LEFT JOIN CUser ON ( OrderForm.cID = CUser.userID) WHERE  createTime BETWEEN #{start} AND #{end}
+	</select>
 
-    </select>
-
-    <select id="yearOrder" resultType="com.digou.entity.Order">
-        select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
-
-    </select>
-    <select id="weekOrder" resultType="com.digou.entity.Order">
-        select * FROM OrderForm where createTime BETWEEN #{start} AND #{end}
-
-    </select>
-    <select id="allOrder" resultType="com.digou.entity.Order">
-        SELECT * FROM OrderForm
+    <select id="allOrder" resultMap="OrderMap">
+          SELECT OrderForm.orderID AS orId , OrderForm.cID AS cID,  OrderForm.pID AS pID, OrderForm.orderPrice AS Price,
+		 OrderForm.createTime AS createTime,OrderForm.amount AS  amount, OrderForm.isFinish AS isFinish,
+		 OrderForm.adminProfit AS adminProfit,  Seller_User.shopName AS shopName, Product.pName AS pName,
+         Product.portraitURL AS pUrl, CUser.nickname AS cname,Seller_User.nickname AS sellerName
+        FROM  (OrderForm LEFT JOIN Product ON (OrderForm.pID =Product.pID) LEFT JOIN Seller_User ON ( Product.sID = Seller_User.id) )LEFT JOIN CUser ON ( OrderForm.cID = CUser.userID)
     </select>
 
     <select id="customerBlackInfo" resultType="com.digou.entity.CUser">
