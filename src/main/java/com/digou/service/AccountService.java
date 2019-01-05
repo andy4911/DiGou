@@ -29,13 +29,12 @@ public class AccountService implements AccountIService {
 			 											     int userID, 
 			 											  String nickname, 
 			 											  String address,
-			 											  String portraitURL,
-			 											  String tel) {
-    	CUser user = accountMapper.findCUser(tel);
-    	if (user != null) {
-    		return ResponseCommon.wrappedResponse(null, 103, null);
-		}
-    	user = accountMapper.findCUserByID(userID);
+			 											  String portraitURL) {
+//    	CUser user = accountMapper.findCUser(tel);
+//    	if (user != null) {
+//    		return ResponseCommon.wrappedResponse(null, 103, null);
+//		}
+    	CUser user = accountMapper.findCUserByID(userID);
     	if (user == null) {
 			return ResponseCommon.wrappedResponse(null, 102, null);
 		}
@@ -43,7 +42,6 @@ public class AccountService implements AccountIService {
         user.nickname = nickname;
         user.portraitURL = portraitURL;
     	user.address = address;
-    	user.username = tel;
     	accountMapper.updateCUser(user);
     	return ResponseCommon.wrappedResponse(null, 101, null);
     }
