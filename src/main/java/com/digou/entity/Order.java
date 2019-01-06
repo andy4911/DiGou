@@ -10,6 +10,7 @@ public class Order extends BaseEntity {
 	public int amount;
 	public Product product;
 	public float adminProfit;
+	public int commented;
 
 
 	//gwm以下

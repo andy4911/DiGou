@@ -5,19 +5,19 @@
 
     <!-- cUser -->
 	<insert id="insertUser" parameterType="com.digou.entity.SellerUser" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO Seller_User (url, telephone, shopName, nickname, description, major, password,isTop5)
-		VALUE (#{url}, #{telephone}, #{shopName}, #{nickname}, #{description}, #{major}, #{password},0)
+		INSERT INTO Seller_User (url, telephone, shopName, nickname, description, major, password, email)
+		VALUE (#{url}, #{telephone}, #{shopName}, #{nickname}, #{description}, #{major}, #{password},#{email})
 	</insert>
 
     <!-- cUser -->
 	<insert id="addGood" parameterType="com.digou.entity.Product">
-		INSERT INTO Product (pName, price, description, portraitURL, sID, num,isTop10)
-		VALUE (#{pName}, #{price}, #{description}, #{portraitURL}, #{sID}, #{num},0)
+		INSERT INTO Product (pName, price, description, portraitURL, sID, num ,isDelete)
+		VALUE (#{pName}, #{price}, #{description}, #{portraitURL}, #{sID}, #{num} ,0)
 	</insert>
 
     <update id="modifyUser" parameterType="com.digou.entity.SellerUser">
         UPDATE Seller_User SET url=#{url}, telephone=#{telephone}, shopName = #{shopName}, nickname = #{nickname},
-        description = #{description}, major=#{major} WHERE id=#{id}
+        description = #{description}, major=#{major} ,email=#{email} WHERE id=#{id}
     </update>
     <!--
     <update id="updateCUser" parameterType="com.digou.entity.CUser">
@@ -77,4 +77,40 @@
     <update id="select_logistics" >
         UPDATE OrderForm SET company=#{com},logistics_point=#{point} WHERE orderID=#{id}
     </update>
+
+    <!--申请广告-->
+    <update id="apply_ads">
+
+        <if test="pId != '-1'">
+            UPDATE Product SET isTop10= -1 WHERE pID=#{pId}
+        </if>
+        <if test="pId == '-1'.toString()">
+            UPDATE Seller_User SET isTop5= -1 WHERE id=#{sId}
+        </if>
+    </update>
+
+    <resultMap id="allcomments" type="com.digou.entity.Comment">
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="orderID" jdbcType="INTEGER" property="orderID"/>
+
+
+        <result column="portraitURL" jdbcType="VARCHAR" property="portraitURL"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="cID"  jdbcType="INTEGER" property="orderForm.cID"/>
+    </resultMap>
+
+    <!--评论-->
+    <select id="comment" parameterType="int" resultType="com.digou.entity.Comment">
+<!--         SELECT *  
+        FROM Comment LEFT JOIN (CUser LEFT JOIN (OrderForm LEFT JOIN Product ON Product.pID = OrderForm.pID) 
+        ON CUser.userID=OrderForm.cID ) ON OrderForm.orderID=Comment.orderID WHERE Product.pID=#{pId} -->
+        SELECT Comment.orderID, Comment.createTime, Comment.message, OrderForm.cID, CUser.nickname, Product.sID, CUser.portraitURL, commented
+		FROM Comment LEFT JOIN OrderForm ON Comment.orderID=OrderForm.orderID
+				 LEFT JOIN CUser ON OrderForm.cID=CUser.userID
+				 LEFT JOIN Product ON Product.pID=OrderForm.pID
+		WHERE OrderForm.pID=#{0}
+    </select>
+
+    <!--查看订单历史-->
+    <!--查看订单历史使用allOrder查询-->
 </mapper>
