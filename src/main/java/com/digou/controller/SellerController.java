@@ -147,5 +147,11 @@ public class SellerController {
         return sellerService.comment(response,pId);
     }
 
-    
+    //查看历史订单
+    @RequestMapping("/api/b/order/history")
+    public Map<String,Object> order_history(HttpServletResponse response,
+                                      @RequestParam(value = "date",required = true) int date,
+                                      @RequestParam(value = "sId",required = true) int sId){
+        return sellerService.history(response,date,sId);
+    }
 }

@@ -104,4 +104,6 @@
         SELECT *  FROM Comment LEFT JOIN (CUser LEFT JOIN (OrderForm LEFT JOIN Product ON Product.pID = OrderForm.pID) ON CUser.userID=OrderForm.cID ) ON OrderForm.orderID=Comment.orderID WHERE Product.pID=#{pId}
     </select>
 
+    <!--查看订单历史-->
+
 </mapper>
