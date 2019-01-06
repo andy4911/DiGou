@@ -24,7 +24,7 @@ public class SellerUser {
     private String password;
     //gwm
     private String email;
-
+    private int isTop5;
     /**
      * url : http://lc-tp28gntm.cn-n1.lcfile.com/d2477ef0b23ec61b963f.jpg
      * telephone : 18392128500
@@ -49,6 +49,10 @@ public class SellerUser {
         this.password = password;
         this.email = email;
     }
+
+    public int getIsTop5() { return isTop5; }
+
+    public void setIsTop5(int isTop5) { this.isTop5 = isTop5; }
 
     public String getEmail() { return email; }
 
