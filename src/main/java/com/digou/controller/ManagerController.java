@@ -122,6 +122,10 @@ public class ManagerController {
     public Map<String, Object> sellerTop5Info(HttpServletResponse response) {
         return managerService.sellerTop5Info(response);
     }
+    @RequestMapping("/api/m/seller_top5_info_ads")
+    public Map<String, Object> sellerTop5InfoAds(HttpServletResponse response) {
+        return managerService.sellerTop5InfoAds(response);
+    }
 
     @RequestMapping("/api/m/seller_to_top5")
     public Map<String, Object> sellerToTop5(HttpServletResponse response,
@@ -172,6 +176,11 @@ public class ManagerController {
     public void mysqlBackup(HttpServletResponse response) {
         managerService.Download(response);
     }
+    @RequestMapping("/api/m/income/all")
+    public Map<String, Object> caculate_income(HttpServletResponse response){
+        return managerService.caculate_income(response);
+    }
+
 
     /*
     @RequestMapping("/api/b/register")

@@ -26,11 +26,13 @@ public interface ManagerMapper {
 	ArrayList<Order>  searchOrderByTime(long start,long end);
 
 	ArrayList<SellerUser> sellerTop5Info();
+	ArrayList<SellerUser> sellerTop5InfoAds();
 	ArrayList<SellerUser> top5SellerApplyInfo();
 
 	ArrayList<Product> top10ProductApplyInfo();
 	ArrayList<Product> productTop10Info();
 	float profitRate();
+	ArrayList<Order> all_order_price_admin();
 
 	void top10ProductApplyReject(int id);
 	void top5SellerApplyReject(int id);
