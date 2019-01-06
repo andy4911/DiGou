@@ -54,6 +54,7 @@ public class OrderService implements OrderIService {
 		order.pID = pID;
 		order.orderPrice = product.price *amount;
 		order.amount = amount;
+		order.commented = 0;
 		System.out.println(  managerMapper.profitRate());
 		float rate  = (float ) managerMapper.profitRate();
 		order.adminProfit =order.orderPrice * rate;
@@ -145,6 +146,7 @@ public class OrderService implements OrderIService {
 		conditionArr.add("orderPrice");
 		conditionArr.add("amount");
 		conditionArr.add("product");
+		conditionArr.add("commented");
 		Map<String, Object> data = ResponseCommon.filter(orders, conditionArr, "orderArr");
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}

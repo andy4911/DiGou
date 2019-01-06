@@ -101,7 +101,14 @@
 
     <!--评论-->
     <select id="comment" parameterType="int" resultType="com.digou.entity.Comment">
-        SELECT *  FROM Comment LEFT JOIN (CUser LEFT JOIN (OrderForm LEFT JOIN Product ON Product.pID = OrderForm.pID) ON CUser.userID=OrderForm.cID ) ON OrderForm.orderID=Comment.orderID WHERE Product.pID=#{pId}
+<!--         SELECT *  
+        FROM Comment LEFT JOIN (CUser LEFT JOIN (OrderForm LEFT JOIN Product ON Product.pID = OrderForm.pID) 
+        ON CUser.userID=OrderForm.cID ) ON OrderForm.orderID=Comment.orderID WHERE Product.pID=#{pId} -->
+        SELECT Comment.orderID, Comment.createTime, Comment.message, OrderForm.cID, CUser.nickname, Product.sID, CUser.portraitURL, commented
+		FROM Comment LEFT JOIN OrderForm ON Comment.orderID=OrderForm.orderID
+				 LEFT JOIN CUser ON OrderForm.cID=CUser.userID
+				 LEFT JOIN Product ON Product.pID=OrderForm.pID
+		WHERE OrderForm.pID=#{0}
     </select>
 
 </mapper>
