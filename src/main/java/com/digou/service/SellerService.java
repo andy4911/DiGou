@@ -287,14 +287,13 @@ public class SellerService {
 
 	//显示评论
 	public Map<String,Object> comment(HttpServletResponse response, int pId){
-		ArrayList<Comment> comments = new ArrayList<Comment>();
-		comments = sellerMapper.comment(pId);
+		ArrayList<Comment> comments = sellerMapper.comment(pId);
 		for (int i = 0; i < comments.size(); i++) {
 			comments.get(i).Date=timetoDate(comments.get(i).createTime,1);
 		}
 
-		Map<String,Object> data=new HashMap<>();
-		data.put("comments",comments);
+		Map<String, Object> data = new HashMap<>();
+		data.put("comment",comments);
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 	/**

@@ -30,7 +30,6 @@ public interface SellerMapper {
 	ArrayList<Order> all_order_price(int id);
 	void delete(int pid);
 	void select_logistics( @Param("id")int orderId, @Param("com") String company, String point);
-	//@Param("po")
 	void apply_ads(int sId,int pId);
 	ArrayList<Comment> comment(int pId);
 }

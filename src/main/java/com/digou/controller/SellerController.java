@@ -104,9 +104,7 @@ public class SellerController {
                                            @RequestParam(value = "sID",required = true) int sID,
                                            @RequestParam(value = "description",required = true) String description,
                                            @RequestParam(value = "price",required = true) float price,
-                                           @RequestParam(value = "portraitURL",required = true) String portraitURL
-
-    ){
+                                           @RequestParam(value = "portraitURL",required = true) String portraitURL){
         return sellerService.good_modify(response,pID, pName,  description,  price,  portraitURL,  sID,  num);
     }
 
@@ -148,4 +146,6 @@ public class SellerController {
                                       @RequestParam(value = "pId",required = true) int pId){
         return sellerService.comment(response,pId);
     }
+
+    
 }
