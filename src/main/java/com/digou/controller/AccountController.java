@@ -39,9 +39,8 @@ public class AccountController {
             @RequestParam(value = "userID", required = true) int userID,
             @RequestParam(value = "nickname", required = false) String nickname,
             @RequestParam(value = "portraitURL", required = false) String portraitURL,
-            @RequestParam(value = "address", required = false) String address,
-            @RequestParam(value = "tel", required = false) String tel) {
-    	return accountService.alterUserInfo(response, userID, nickname, address, portraitURL, tel);
+            @RequestParam(value = "address", required = false) String address) {
+    	return accountService.alterUserInfo(response, userID, nickname, address, portraitURL);
     }
     
     @RequestMapping("/api/c/logup")  
