@@ -15,7 +15,7 @@
         update Product set isTop10 =-2 where  pID=#{id}
     </update>
     <select id="top10ProductApplyInfo" resultType="com.digou.entity.Product" >
-        SELECT * FROM Product WHERE isTop10 = -1
+        SELECT * FROM Product WHERE isTop10 = -1 AND isDelete =0
     </select>
 
     <update id="top5SellerApplyReject" parameterType="int">
@@ -30,7 +30,7 @@
     </select>
 
     <update id="productToTop10" parameterType="int" >
-        update Product set isTop10 =1 where pID =#{id}
+        update Product set isTop10 =1 where pID =#{id} AND isDelete =0
     </update>
 
     <update id="productTop10Cancel" parameterType="int">

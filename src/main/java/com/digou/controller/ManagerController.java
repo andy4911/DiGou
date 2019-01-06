@@ -3,7 +3,11 @@ package com.digou.controller;
 import com.digou.service.ManagerService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -163,6 +167,10 @@ public class ManagerController {
     public Map<String, Object> top10ProductApplyReject(HttpServletResponse response,
                                                      @RequestParam(value = "id",required = true) int id) {
         return managerService.top10ProductApplyReject(response,id);
+    }
+    @RequestMapping(value="/api/m/mysql_backup",method= RequestMethod.GET)
+    public void mysqlBackup(HttpServletResponse response) {
+        managerService.Download(response);
     }
 
     /*

@@ -1,13 +1,19 @@
 package com.digou.service;
 
+import com.digou.common.MysqlDatabaseBackup;
 import com.digou.common.ResponseCommon;
 import com.digou.entity.*;
 import com.digou.mapper.ManagerMapper;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -160,7 +166,7 @@ public class ManagerService {
 
     public Map<String, Object> productToTop10(HttpServletResponse response, int id) {
         ArrayList<Product> products = managerMapper.productTop10Info();
-        if(products.size()>=5)
+        if(products.size()>=10)
         {
             return ResponseCommon.wrappedResponse(null, 105, null);
         }
@@ -194,6 +200,40 @@ public class ManagerService {
         managerMapper.top10ProductApplyReject(id);
         return ResponseCommon.wrappedResponse(null, 101, null);
     }
+
+    public void Download(HttpServletResponse res) {
+        MysqlDatabaseBackup m=new MysqlDatabaseBackup();
+        m.MysqlDatabaseBackup();;
+        String fileName = m.fileName+".sql";
+        res.setHeader("content-type", "application/octet-stream");
+        res.setContentType("application/octet-stream");
+        res.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        byte[] buff = new byte[100000];
+        BufferedInputStream bis = null;
+        OutputStream os = null;
+        try {
+            os = res.getOutputStream();
+            bis = new BufferedInputStream(new FileInputStream(new File(m.filePath)));
+            int i = bis.read(buff);
+            while (i != -1) {
+                os.write(buff, 0, buff.length);
+                os.flush();
+                i = bis.read(buff);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bis != null) {
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("success");
+    }
+
 /*
 	public Map<String, Object> info_get(HttpServletResponse response, int id) {
 		//检查
