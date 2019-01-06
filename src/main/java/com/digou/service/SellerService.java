@@ -170,8 +170,8 @@ public class SellerService {
 			}
 
 			//计算拥有收入的时间
-			time_30d_ago = Time_30d_ago(time);
-			time_20w_ago = Time_20w_ago(time);
+			time_30d_ago = Time_30d_ago(time,29);
+			time_20w_ago = Time_20w_ago(time,19);
 			time_13m_ago=Time_13m_ago(time,12);//向前12个月，就是最近13个月
 			time_5y_ago=Time_5y_ago(time,4);//现在2019  四年前2015
 
@@ -287,14 +287,68 @@ public class SellerService {
 
 	//显示评论
 	public Map<String,Object> comment(HttpServletResponse response, int pId){
-		ArrayList<Comment> comments = new ArrayList<Comment>();
-		comments = sellerMapper.comment(pId);
+		ArrayList<Comment> comments = sellerMapper.comment(pId);
 		for (int i = 0; i < comments.size(); i++) {
 			comments.get(i).Date=timetoDate(comments.get(i).createTime,1);
 		}
 
-		Map<String,Object> data=new HashMap<>();
-		data.put("comments",comments);
+		Map<String, Object> data = new HashMap<>();
+		data.put("comment",comments);
+		return ResponseCommon.wrappedResponse(data, 101, null);
+	}
+
+	//查看订单历史
+	public Map<String,Object> history(HttpServletResponse response, int date,int sId){
+		ArrayList<Order> all_orders = sellerMapper.allOrder(sId);
+		ArrayList<Order> need_orders = new ArrayList<Order>();
+		//获取当前时间精确到毫秒级的时间戳，例：1525849325942
+		long time = System.currentTimeMillis();
+		long Time = time;
+		long day=24*60*60*1000L;
+
+		long dayly_time=0, weekly_time=0, monthly_time=0, yearly_time=0;
+		dayly_time = Time_30d_ago(time,0);
+		weekly_time  = Time_20w_ago(time,0);
+		monthly_time = Time_13m_ago(time,0);
+		yearly_time =Time_5y_ago(time ,0);
+			//day
+		if (date == 1){
+			for (int i = 0; i < all_orders.size() ; i++) {
+				if (all_orders.get(i).createTime >= dayly_time){
+					all_orders.get(i).Date = timetoDate(all_orders.get(i).createTime,1);
+					need_orders.add(all_orders.get(i));
+				}
+			}
+			//week
+		}else if(date == 7){
+			for (int i = 0; i < all_orders.size() ; i++) {
+				if (all_orders.get(i).createTime >= weekly_time){
+					all_orders.get(i).Date = timetoDate(all_orders.get(i).createTime,1);
+					need_orders.add(all_orders.get(i));
+				}
+			}
+			//month
+		}else if(date == 30){
+			for (int i = 0; i < all_orders.size() ; i++) {
+				if (all_orders.get(i).createTime >= monthly_time){
+					all_orders.get(i).Date = timetoDate(all_orders.get(i).createTime,1);
+					need_orders.add(all_orders.get(i));
+				}
+			}
+			//year
+		}else if(date == 365){
+			for (int i = 0; i < all_orders.size() ; i++) {
+				if (all_orders.get(i).createTime >= yearly_time){
+					all_orders.get(i).Date = timetoDate(all_orders.get(i).createTime,1);
+					need_orders.add(all_orders.get(i));
+				}
+			}
+		}else{
+			System.out.println("输入正确格式/sellersservice   /查看订单历史");
+		}
+
+		Map<String, Object> data = new HashMap<>();
+		data.put("history", need_orders);
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
 	/**
@@ -331,24 +385,24 @@ public class SellerService {
 		return new_time;
 	}
 	//20周前的准确时间
-	public static long Time_20w_ago(long time){
+	public static long Time_20w_ago(long time ,int w){
 
 		long day= 24*60*60*1000L;
 		long k,new_time_mid,monday;
 		k = time - 1546185600151L;
 		new_time_mid = ( k )%(7*day);
 		monday = time - new_time_mid;
-		return  monday - 19*7*day;
+		return  monday - w*7*day;
 	}
 	//30天前的准确时间
-	public static long Time_30d_ago(long time){
+	public static long Time_30d_ago(long time ,int d){
 
 		long day= 24*60*60*1000L;
 		long k,new_time_mid,today;
 		k = time - 1546185600151L;
 		new_time_mid = ( k )%(day);
 		today = time - new_time_mid;
-		return  today - 29*day;
+		return  today - d*day;
 	}
 	//时间转化为时间戳
 	public static String dateToStamp(String s) {

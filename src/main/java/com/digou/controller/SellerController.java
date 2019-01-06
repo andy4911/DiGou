@@ -104,9 +104,7 @@ public class SellerController {
                                            @RequestParam(value = "sID",required = true) int sID,
                                            @RequestParam(value = "description",required = true) String description,
                                            @RequestParam(value = "price",required = true) float price,
-                                           @RequestParam(value = "portraitURL",required = true) String portraitURL
-
-    ){
+                                           @RequestParam(value = "portraitURL",required = true) String portraitURL){
         return sellerService.good_modify(response,pID, pName,  description,  price,  portraitURL,  sID,  num);
     }
 
@@ -147,5 +145,13 @@ public class SellerController {
     public Map<String,Object> comment(HttpServletResponse response,
                                       @RequestParam(value = "pId",required = true) int pId){
         return sellerService.comment(response,pId);
+    }
+
+    //查看历史订单
+    @RequestMapping("/api/b/order/history")
+    public Map<String,Object> order_history(HttpServletResponse response,
+                                      @RequestParam(value = "date",required = true) int date,
+                                      @RequestParam(value = "sId",required = true) int sId){
+        return sellerService.history(response,date,sId);
     }
 }
