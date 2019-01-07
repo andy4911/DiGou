@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @ComponentScan({"com.digou.mapper"})
 @Service("sellerService")
@@ -105,6 +103,9 @@ public class SellerService {
 		for (int i = 0; i < orders.size(); i++) {
 			orders.get(i).Date = timetoDate(orders.get(i).createTime,1);
 		}
+
+
+		sort_order(orders);
 		Map<String, Object> data = new HashMap<>();
 		data.put("order", orders);
 		return ResponseCommon.wrappedResponse(data, 101, null);
@@ -350,13 +351,37 @@ public class SellerService {
 			System.out.println("输入正确格式/sellersservice   /查看订单历史");
 		}
 
+		sort_order(need_orders);
 		Map<String, Object> data = new HashMap<>();
 		data.put("history", need_orders);
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
+
+	//订单历史下search
+	public Map<String,Object> search_order(HttpServletResponse response, int orderId){
+	    ArrayList<Order> an_order=sellerMapper.search(orderId);
+
+        an_order.get(0).Date=timetoDate(an_order.get(0).createTime,1);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("an_order",an_order);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
 	/**
 	 * 以下为辅助函数部分
 	 */
+	//为订单按照时间顺序排序
+	public void sort_order(ArrayList<Order> order){
+		order.sort(new Comparator<Order>() {
+			@Override
+			public int compare(Order o1, Order o2) {
+				if (o1.createTime >= o2.createTime){
+					return -1;//-1代表放在前面
+				}
+				return 1;
+			}
+		});
+	}
 	//k年前的准确时间
 	public static long Time_5y_ago(long time,int k){
 		long new_time=time;

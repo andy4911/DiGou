@@ -32,5 +32,5 @@ public interface SellerMapper {
 	void select_logistics( @Param("id")int orderId, @Param("com") String company, String point);
 	void apply_ads(int sId,int pId);
 	ArrayList<Comment> comment(int pId);
-	//ArrayList<Order> history(int sId);
+	ArrayList<Order> search(int orderId);
 }
