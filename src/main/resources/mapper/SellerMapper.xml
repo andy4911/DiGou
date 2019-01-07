@@ -113,4 +113,11 @@
 
     <!--查看订单历史-->
     <!--查看订单历史使用allOrder查询-->
+
+    <!--历史订单下search-->
+    <select id="search" parameterType="int" resultType="com.digou.entity.Order">
+        SELECT * FROM OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID
+                                LEFT JOIN CUser   ON  OrderForm.cID=CUser.userID
+                                WHERE OrderForm.orderID=#{orderId}
+    </select>
 </mapper>
