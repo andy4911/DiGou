@@ -158,7 +158,9 @@ public class SellerController {
     //历史订单下search
     @RequestMapping("/api/b/order/history/search")
     public Map<String,Object> order_search(HttpServletResponse response,
-                                            @RequestParam(value = "orderId",required = true) int orderId){
-        return sellerService.search_order(response,orderId);
+                                            @RequestParam(value = "sId",required = true) int sId,
+                                            @RequestParam(value = "start",required = true) long start,
+                                            @RequestParam(value = "end",required = true) long end){
+        return sellerService.search_order(response,sId,start,end);
     }
 }
