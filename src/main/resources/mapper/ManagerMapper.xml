@@ -11,11 +11,14 @@
     <select id="findAll" resultType="com.digou.entity.Product">
         SELECT * FROM Product LIMIT #{origin},#{length}
     </select>-->
+    <select id="all_order_price_admin" parameterType="int" resultType="com.digou.entity.Order">
+        SELECT * FROM OrderForm LEFT JOIN Product ON Product.pID=OrderForm.pID
+    </select>
     <update id="top10ProductApplyReject" parameterType="int">
         update Product set isTop10 =-2 where  pID=#{id}
     </update>
     <select id="top10ProductApplyInfo" resultType="com.digou.entity.Product" >
-        SELECT * FROM Product WHERE isTop10 = -1
+        SELECT * FROM Product WHERE isTop10 = -1 AND isDelete =0
     </select>
 
     <update id="top5SellerApplyReject" parameterType="int">
@@ -30,7 +33,7 @@
     </select>
 
     <update id="productToTop10" parameterType="int" >
-        update Product set isTop10 =1 where pID =#{id}
+        update Product set isTop10 =1 where pID =#{id} AND isDelete =0
     </update>
 
     <update id="productTop10Cancel" parameterType="int">
@@ -43,6 +46,20 @@
 
     <select id="sellerTop5Info"  resultType="com.digou.entity.SellerUser">
         SELECT *  FROM Seller_User WHERE isTop5 = 1 AND isBlack =0
+    </select>
+
+    <resultMap id="OrderMap2" type="com.digou.entity.SellerUser">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="shopName" jdbcType="CHAR" property="shopName" />
+        <result column="major" jdbcType="CHAR" property="major" />
+        <result column="pName" jdbcType="VARCHAR" property="product.pName" />
+        <result column="num" jdbcType="INTEGER" property="product.num" />
+        <result column="portraitURL" jdbcType="VARCHAR" property="product.portraitURL" />
+        <result column="price" jdbcType="INTEGER" property="product.price" />
+
+    </resultMap>
+    <select id="sellerTop5InfoAds"  resultMap="OrderMap2">
+       SELECT id,  shopName,  major, portraitURL, pName, price, num FROM (Seller_User  LEFT JOIN Product ON Product.sID = Seller_User.id) WHERE Seller_User.isTop5=1 AND Seller_User.isBlack=0 AND Product.isDelete=0
     </select>
 
     <update id="sellerToTop5" parameterType="int" >

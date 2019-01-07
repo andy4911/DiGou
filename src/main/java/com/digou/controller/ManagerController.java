@@ -3,7 +3,11 @@ package com.digou.controller;
 import com.digou.service.ManagerService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -118,6 +122,10 @@ public class ManagerController {
     public Map<String, Object> sellerTop5Info(HttpServletResponse response) {
         return managerService.sellerTop5Info(response);
     }
+    @RequestMapping("/api/m/seller_top5_info_ads")
+    public Map<String, Object> sellerTop5InfoAds(HttpServletResponse response) {
+        return managerService.sellerTop5InfoAds(response);
+    }
 
     @RequestMapping("/api/m/seller_to_top5")
     public Map<String, Object> sellerToTop5(HttpServletResponse response,
@@ -164,6 +172,17 @@ public class ManagerController {
                                                      @RequestParam(value = "id",required = true) int id) {
         return managerService.top10ProductApplyReject(response,id);
     }
+    //method= RequestMethod.GET
+    @RequestMapping("/api/m/mysql_backup")
+    public void mysqlBackup(HttpServletResponse response) {
+        managerService.Download(response);
+    }
+
+    @RequestMapping("/api/m/income/all")
+    public Map<String, Object> caculate_income(HttpServletResponse response){
+        return managerService.caculate_income(response);
+    }
+
 
     /*
     @RequestMapping("/api/b/register")

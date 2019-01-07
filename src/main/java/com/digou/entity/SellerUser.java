@@ -1,5 +1,7 @@
 package com.digou.entity;
 
+import java.util.ArrayList;
+
 public class SellerUser {
 
     /**
@@ -25,6 +27,8 @@ public class SellerUser {
     //gwm
     private String email;
     private int isTop5;
+    public  Product product ;
+    public ArrayList<Product> products;
     /**
      * url : http://lc-tp28gntm.cn-n1.lcfile.com/d2477ef0b23ec61b963f.jpg
      * telephone : 18392128500
@@ -48,6 +52,8 @@ public class SellerUser {
         this.major = major;
         this.password = password;
         this.email = email;
+
+
     }
 
     public int getIsTop5() { return isTop5; }
