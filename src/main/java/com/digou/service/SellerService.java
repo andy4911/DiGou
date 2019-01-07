@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -102,6 +103,7 @@ public class SellerService {
 		for (int i = 0; i < orders.size(); i++) {
 			orders.get(i).Date = timetoDate(orders.get(i).createTime,1);
 		}
+
 
 		sort_order(orders);
 		Map<String, Object> data = new HashMap<>();
@@ -354,6 +356,17 @@ public class SellerService {
 		data.put("history", need_orders);
 		return ResponseCommon.wrappedResponse(data, 101, null);
 	}
+
+	//订单历史下search
+	public Map<String,Object> search_order(HttpServletResponse response, int orderId){
+	    ArrayList<Order> an_order=sellerMapper.search(orderId);
+
+        an_order.get(0).Date=timetoDate(an_order.get(0).createTime,1);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("an_order",an_order);
+        return ResponseCommon.wrappedResponse(data, 101, null);
+    }
 	/**
 	 * 以下为辅助函数部分
 	 */

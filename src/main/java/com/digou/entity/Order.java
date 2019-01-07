@@ -20,11 +20,11 @@ public class Order extends BaseEntity {
     public String portraitURL;
     public String username;
     public String address;
-    public String cName;
+    public String nickname;
     public String shopName;
-    public String sellerName;
     public String company;
     public String point;
+
     /** isFinissh
      * 1 未发货
      * 0 订单失败（退款）
