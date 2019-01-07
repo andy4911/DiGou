@@ -358,13 +358,22 @@ public class SellerService {
 	}
 
 	//订单历史下search
-	public Map<String,Object> search_order(HttpServletResponse response, int orderId){
-	    ArrayList<Order> an_order=sellerMapper.search(orderId);
+	public Map<String,Object> search_order(HttpServletResponse response, int sId,long start,long end){
+	    ArrayList<Order> all_order=sellerMapper.search(sId);
 
-        an_order.get(0).Date=timetoDate(an_order.get(0).createTime,1);
+	    System.out.println(timetoDate(start,1));
+		System.out.println(timetoDate(end,1));
+		ArrayList<Order> time_order=new ArrayList<Order>();
+		for (int i = 0; i < all_order.size() ; i++) {
+			if ((all_order.get(i).createTime >= start) && (all_order.get(i).createTime < end)){
+				all_order.get(i).Date = timetoDate(all_order.get(i).createTime,1);
+				time_order.add(all_order.get(i));
+			}
+		}
 
+		sort_order(time_order);
         Map<String, Object> data = new HashMap<>();
-        data.put("an_order",an_order);
+        data.put("an_order",time_order);
         return ResponseCommon.wrappedResponse(data, 101, null);
     }
 	/**
