@@ -281,7 +281,9 @@ public class ManagerService {
             /**
              * 记得之后改成 判断订单完成的钱算作收入
              */
-
+            if(orders_price.get(i).isFinish!=2){
+                continue;
+            }
             if (time_now_to_create < 1 * day) {
                 //24小时之内
                 income_1 = income_1 + profit;
