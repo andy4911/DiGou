@@ -1,9 +1,11 @@
 package com.digou.mapper;
 
+import com.digou.entity.Comment;
 import com.digou.entity.Order;
 import com.digou.entity.Product;
 import com.digou.entity.SellerUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 
@@ -23,5 +25,12 @@ public interface SellerMapper {
 	//gwm
 	ArrayList<Order> allOrder(int id);
 	void refund(int orderId);
+	void sending(int orderId);
 	void modify(Product product);
+	ArrayList<Order> all_order_price(int id);
+	void delete(int pid);
+	void select_logistics( @Param("id")int orderId, @Param("com") String company, String point);
+	void apply_ads(int sId,int pId);
+	ArrayList<Comment> comment(int pId);
+	//ArrayList<Order> history(int sId);
 }

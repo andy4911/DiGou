@@ -4,8 +4,8 @@
 <mapper namespace="com.digou.mapper.OrderMapper">  
 
 	<insert id="insert" parameterType="com.digou.entity.Order" useGeneratedKeys="true" keyProperty="orderID">
-		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount,adminProfit)
-		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount},#{adminProfit})
+		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount, adminProfit, commented)
+		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount},#{adminProfit}, #{commented})
 	</insert>
 	
 	<resultMap id="OrderMap" type="com.digou.entity.Order">
@@ -31,14 +31,25 @@
 	
 	</resultMap> 
 	<select id="find" parameterType="int" resultMap="OrderMap">
-		SELECT orderID, cID, Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL, isFinish, amount
+		SELECT orderID, cID, Product.pID, pName, sID, shopName, createTime, orderPrice, Product.description, price, num, portraitURL, isFinish, amount, commented
 		FROM OrderForm RIGHT JOIN Product ON OrderForm.pID=Product.pID
 			 RIGHT JOIN Seller_User ON Product.sID=Seller_User.id
 		WHERE cID=#{0}
 	</select>
-	
+
+	<select id="findWithinTime" resultMap="OrderMap">
+		SELECT orderID, cID, Product.pID, pName, sID, shopName, OrderForm.createTime, orderPrice, Product.description, price, num, portraitURL, isFinish, amount, commented
+		FROM OrderForm RIGHT JOIN Product ON OrderForm.pID=Product.pID
+			 RIGHT JOIN Seller_User ON Product.sID=Seller_User.id
+		WHERE cID=#{cID} AND OrderForm.createTime &gt; #{begin} AND OrderForm.createTime &lt; #{end}
+	</select>
 	<update id="updateStatus" parameterType="int">
 		UPDATE OrderForm SET isFinish=#{status} WHERE orderID=#{orderID}
+		
 	</update>
+		<update id="updateCommented" parameterType="int">
+		UPDATE OrderForm SET commented=#{status} WHERE orderID=#{orderID}
+	</update>
+	
 	
 </mapper>

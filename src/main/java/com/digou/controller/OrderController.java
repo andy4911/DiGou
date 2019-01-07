@@ -38,6 +38,13 @@ public class OrderController {
     	return orderService.lookupOrders(cID);
     } 
 
+    @RequestMapping("/api/c/ordersWithin")  
+    public Map<String, Object> ordersWithin(HttpServletResponse response, 
+            @RequestParam(value = "cID", required = true) int cID, 
+            @RequestParam(value = "type", required = true) int type) {
+    	return orderService.ordersWithin(cID, type);
+    } 
+    
     @RequestMapping("/api/c/refund")  
     public Map<String, Object> refund(HttpServletResponse response, 
             @RequestParam(value = "orderID", required = true) int orderID){

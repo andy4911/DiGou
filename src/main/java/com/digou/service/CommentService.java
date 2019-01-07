@@ -12,12 +12,15 @@ import org.springframework.stereotype.Service;
 import com.digou.common.ResponseCommon;
 import com.digou.entity.Comment;
 import com.digou.mapper.CommentMapper;
+import com.digou.mapper.OrderMapper;
 
 @ComponentScan({"com.digou.mapper"})
 @Service("commentService")
 public class CommentService {
 	@Resource
     private CommentMapper commentMapper;
+	@Resource
+    private OrderMapper orderMapper;
 	
     public Map<String, Object> comment(HttpServletResponse response, 
 		     								           int orderID, 
@@ -25,7 +28,9 @@ public class CommentService {
     	Comment comment = new Comment();
     	comment.orderID = orderID;
     	comment.message = message;
+    	comment.createTime = System.currentTimeMillis();
     	commentMapper.insert(comment);
+    	orderMapper.updateCommented(1, orderID);
     	return ResponseCommon.wrappedResponse(null, 101, null);
     }
     

@@ -6,6 +6,7 @@ public class Comment extends BaseEntity {
 	public long createTime;
 	public int cID;
 	public int sID;
-	public String sName;
+	public String portraitURL;
 	public String nickname;
+	public String Date;
 }

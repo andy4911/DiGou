@@ -33,8 +33,9 @@ public class SellerController {
                                         @RequestParam(value = "major",required = true) String major,
                                         @RequestParam(value = "description",required = true) String description,
                                         @RequestParam(value = "nickname",required = true) String nickname,
-                                        @RequestParam(value = "password",required = true) String password) {
-        return sellerService.register(response, url, telephone, shopName, major, description, nickname, password);
+                                        @RequestParam(value = "password",required = true) String password,
+                                        @RequestParam(value = "email",required = true) String email) {
+        return sellerService.register(response, url, telephone, shopName, major, description, nickname, password,email);
     }
 
     @RequestMapping("/api/b/info/get")
@@ -51,8 +52,9 @@ public class SellerController {
                                         @RequestParam(value = "shopName",required = true) String shopName,
                                         @RequestParam(value = "major",required = true) String major,
                                         @RequestParam(value = "description",required = true) String description,
-                                        @RequestParam(value = "nickname",required = true) String nickname) {
-        return sellerService.info_modify(response, id, url, telephone, shopName, major, description, nickname);
+                                        @RequestParam(value = "nickname",required = true) String nickname,
+                                        @RequestParam(value = "email",required = true) String email) {
+        return sellerService.info_modify(response, id, url, telephone, shopName, major, description, nickname, email);
     }
 
     @RequestMapping("/api/b/good/add")
@@ -83,8 +85,14 @@ public class SellerController {
     //商家退款
     @RequestMapping("/api/b/order/refund")
     public Map<String, Object> refund_order(HttpServletResponse response,
-                                          @RequestParam(value="orderId",required = true) int orderId) {
+                                            @RequestParam(value="orderId",required = true) int orderId) {
         return sellerService.refund_order(response, orderId);
+    }
+    //待发货、已发货
+    @RequestMapping("/api/b/order/send")
+    public Map<String, Object> send(HttpServletResponse response,
+                                    @RequestParam(value="orderId",required = true) int orderId) {
+        return sellerService.send_order(response, orderId);
     }
 
     //修改商品信息
@@ -96,8 +104,54 @@ public class SellerController {
                                            @RequestParam(value = "sID",required = true) int sID,
                                            @RequestParam(value = "description",required = true) String description,
                                            @RequestParam(value = "price",required = true) float price,
-                                           @RequestParam(value = "portraitURL",required = true) String portraitURL
-                                            ){
+                                           @RequestParam(value = "portraitURL",required = true) String portraitURL){
         return sellerService.good_modify(response,pID, pName,  description,  price,  portraitURL,  sID,  num);
+    }
+
+    //计算商家日、周、月、年及总收入
+    @RequestMapping("/api/b/income/all")
+    public Map<String, Object> income(HttpServletResponse response,
+                                      @RequestParam(value="id",required = true) int id){
+        return sellerService.caculate_income(response,id);
+    }
+
+    //下架商品
+    @RequestMapping("/api/b/good/delete")
+    public Map<String, Object> delete(HttpServletResponse response,
+                                      @RequestParam(value = "pId",required = true) int id) {
+        return sellerService.good_delete(response, id);
+    }
+
+    //选择物流公司
+    @RequestMapping("/api/b/logistics/select")
+    public Map<String, Object>  logistics(HttpServletResponse response,
+                                         @RequestParam(value = "orderId",required = true) int orderId,
+                                         @RequestParam(value = "company",required = true) String company,
+                                         @RequestParam(value = "point",required = true) String point){
+        return sellerService.logistics_select(response,orderId,company,point);
+    }
+
+    //申请广告
+    @RequestMapping("/api/b/advertises")
+    public Map<String, Object>  advertises(HttpServletResponse response,
+                                          @RequestParam(value = "sId",required = true) int sId,
+                                          @RequestParam(value = "pId",required = true) int pId){
+        System.out.println("advertise");
+        return sellerService.apply_advertises(response,sId,pId);
+    }
+
+    //评论
+    @RequestMapping("/api/b/comment")
+    public Map<String,Object> comment(HttpServletResponse response,
+                                      @RequestParam(value = "pId",required = true) int pId){
+        return sellerService.comment(response,pId);
+    }
+
+    //查看历史订单
+    @RequestMapping("/api/b/order/history")
+    public Map<String,Object> order_history(HttpServletResponse response,
+                                      @RequestParam(value = "date",required = true) int date,
+                                      @RequestParam(value = "sId",required = true) int sId){
+        return sellerService.history(response,date,sId);
     }
 }
