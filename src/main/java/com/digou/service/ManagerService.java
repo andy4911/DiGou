@@ -396,7 +396,16 @@ public class ManagerService {
         data.put("income", all_income);
         return ResponseCommon.wrappedResponse(data, 101, null);
     }
+    public Map<String, Object> deleteCuser(HttpServletResponse response,int id) {
+         managerMapper.deleteCuser(id);
 
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
+
+    public Map<String, Object> deleteSeller(HttpServletResponse response,int id) {
+        managerMapper.deleteSeller(id);
+        return ResponseCommon.wrappedResponse(null, 101, null);
+    }
 /*
 	public Map<String, Object> info_get(HttpServletResponse response, int id) {
 		//检查

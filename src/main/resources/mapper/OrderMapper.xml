@@ -18,6 +18,11 @@
 		<result column="pUrl" jdbcType="CHAR" property="portraitURL"/>
 		<result column="cname" jdbcType="CHAR" property="cName"/>
 		<result column="sellerName" jdbcType="CHAR" property="sellerName"/>
+		<result column="price" jdbcType="REAL" property="price"/>
+		<result column="description" jdbcType="CHAR" property="description"/>
+		<result column="num" jdbcType="INTEGER" property="num"/>
+		<result column="sid" jdbcType="INTEGER" property="sID"/>
+
 	</resultMap>
 
 
@@ -25,13 +30,14 @@
 		SELECT OrderForm.orderID AS orId , OrderForm.cID AS cID,  OrderForm.pID AS pID, OrderForm.orderPrice AS Price,
 		 OrderForm.createTime AS createTime,OrderForm.amount AS  amount, OrderForm.isFinish AS isFinish,
 		 OrderForm.adminProfit AS adminProfit,  Seller_User.shopName AS shopName, Product.pName AS pName,
-         Product.portraitURL AS pUrl, CUser.nickname AS cname,Seller_User.nickname AS sellerName
+         Product.portraitURL AS pUrl, CUser.nickname AS cname,Seller_User.nickname AS sellerName,
+         Product.price AS price ,Product.description AS description ,Product.num AS num,Product.sID AS sid
         FROM  (OrderForm LEFT JOIN Product ON (OrderForm.pID =Product.pID) LEFT JOIN Seller_User ON ( Product.sID = Seller_User.id) )LEFT JOIN CUser ON ( OrderForm.cID = CUser.userID) WHERE  (createTime BETWEEN #{start} AND #{end} )AND OrderForm.cID= #{cid}
 	</select>
 
 	<insert id="insert" parameterType="com.digou.entity.Order" useGeneratedKeys="true" keyProperty="orderID">
 		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount, adminProfit, commented,isFinish)
-		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount},#{adminProfit}, #{commented},4)
+		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount},#{adminProfit}, #{commented},1)
 	</insert>
 	
 	<resultMap id="OrderMap" type="com.digou.entity.Order">

@@ -11,12 +11,24 @@
     <select id="findAll" resultType="com.digou.entity.Product">
         SELECT * FROM Product LIMIT #{origin},#{length}
     </select>-->
+
+    <update id="deleteCuser" parameterType="int" >
+        UPDATE Cuser SET isBlack = -1 WHERE userID =#{id}
+    </update>
+
+    <update id="deleteSeller" parameterType="int" >
+      UPDATE Seller_User SET isBlack = -1 WHERE id =2
+    </update>
+    
+    
     <select id="all_order_price_admin" parameterType="int" resultType="com.digou.entity.Order">
         SELECT * FROM OrderForm LEFT JOIN Product ON Product.pID=OrderForm.pID
     </select>
+
     <update id="top10ProductApplyReject" parameterType="int">
         update Product set isTop10 =-2 where  pID=#{id}
     </update>
+
     <select id="top10ProductApplyInfo" resultType="com.digou.entity.Product" >
         SELECT * FROM Product WHERE isTop10 = -1 AND isDelete =0
     </select>

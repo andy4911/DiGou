@@ -15,7 +15,9 @@ public class SellerUser {
 
     private int id;
     private int isPass;
+
     private int isBlack;
+    //isBlack=-1 时 Seller被删除
     private int num;
     private String url;
     private String telephone;
