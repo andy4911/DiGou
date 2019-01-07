@@ -13,11 +13,11 @@
     </select>-->
 
     <update id="deleteCuser" parameterType="int" >
-        UPDATE Cuser SET isBlack = -1 WHERE userID =#{id}
+        UPDATE CUser SET isBlack = -1 WHERE userID =#{id}
     </update>
 
     <update id="deleteSeller" parameterType="int" >
-      UPDATE Seller_User SET isBlack = -1 WHERE id =2
+      UPDATE Seller_User SET isBlack = -1 WHERE id =#{id}
     </update>
     
     

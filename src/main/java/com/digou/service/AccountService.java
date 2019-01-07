@@ -88,7 +88,7 @@ public class AccountService implements AccountIService {
 //			code = AccountCheckEnum.IS_ONLINE;
 //			account = null;
 		}
-		else if (account.isBlack==1)
+		else if (account.isBlack!=0)
 		{
 			code = AccountCheckEnum.IS_BLACK;
 		}
