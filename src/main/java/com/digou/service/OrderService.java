@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import com.digou.entity.Admin;
 import org.springframework.context.annotation.ComponentScan;
@@ -149,6 +150,15 @@ public class OrderService implements OrderIService {
 		conditionArr.add("commented");
 		Map<String, Object> data = ResponseCommon.filter(orders, conditionArr, "orderArr");
 		return ResponseCommon.wrappedResponse(data, 101, null);
+	}
+
+
+	public Map<String,Object> searchOrderByTime(HttpServletResponse response, int cid, long start, long end){
+		ArrayList<Order> orders = orderMapper.searchOrderByTime(cid,start,end);
+		Map<String, Object> data = new HashMap<>();
+		data.put("array", orders);
+		return ResponseCommon.wrappedResponse(data, 101, null);
+
 	}
 
 }
