@@ -4,8 +4,8 @@
 <mapper namespace="com.digou.mapper.OrderMapper">  
 
 	<insert id="insert" parameterType="com.digou.entity.Order" useGeneratedKeys="true" keyProperty="orderID">
-		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount, adminProfit, commented)
-		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount},#{adminProfit}, #{commented})
+		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount, adminProfit, commented,isFinish)
+		VALUE (#{orderID}, #{cID}, #{pID}, #{createTime}, #{orderPrice}, #{amount},#{adminProfit}, #{commented},4)
 	</insert>
 	
 	<resultMap id="OrderMap" type="com.digou.entity.Order">
