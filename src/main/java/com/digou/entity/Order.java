@@ -24,6 +24,12 @@ public class Order extends BaseEntity {
     public String shopName;
     public String company;
     public String point;
+    public String cName;
+    public String sellerName;
+    public int  num;
+    public String description;
+    public float price;
+
 
     /** isFinissh
      * 1 未发货

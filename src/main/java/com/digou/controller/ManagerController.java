@@ -182,6 +182,16 @@ public class ManagerController {
     public Map<String, Object> caculate_income(HttpServletResponse response){
         return managerService.caculate_income(response);
     }
+    @RequestMapping("/api/m/delete_cuser")
+    public Map<String, Object> deleteCuser(HttpServletResponse response,
+                                                @RequestParam(value = "id",required = true) int id){
+        return managerService.deleteCuser(response,id);
+    }
+    @RequestMapping("/api/m/delete_seller")
+    public Map<String, Object> deleteSeller(HttpServletResponse response,
+                                           @RequestParam(value = "id",required = true) int id){
+        return managerService.deleteSeller(response,id);
+    }
 
 
     /*

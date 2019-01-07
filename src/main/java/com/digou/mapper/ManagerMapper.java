@@ -34,6 +34,8 @@ public interface ManagerMapper {
 	float profitRate();
 	ArrayList<Order> all_order_price_admin();
 
+	void deleteSeller(int id);
+	void deleteCuser(int id);
 	void top10ProductApplyReject(int id);
 	void top5SellerApplyReject(int id);
 	void changeProfitRate(float rate);
