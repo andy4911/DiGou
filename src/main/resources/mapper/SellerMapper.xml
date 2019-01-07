@@ -42,7 +42,7 @@
     <!--商家查看订单-->
 
     <select id="allOrder" parameterType="int" resultType="com.digou.entity.Order">
-        SELECT * FROM (OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID) LEFT JOIN CUser ON OrderForm.cID=CUser.userID WHERE sID=#{0}
+        SELECT * FROM (OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID) LEFT JOIN CUser ON OrderForm.cID=CUser.userID WHERE sID=#{0} AND isFinish!=4
         <!--SELECT * FROM OrderForm LEFT JOIN Product ON OrderForm.pID=Product.pID WHERE sID=#{0}-->
     </select>
 
