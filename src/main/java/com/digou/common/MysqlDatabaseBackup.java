@@ -51,6 +51,6 @@ public  class MysqlDatabaseBackup {
         long msec = System.currentTimeMillis();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         fileName = dateFormat.format(msec);
-        filePath="/usr/local/MysqlBackup/"+fileName+".sql";
+        filePath="/usr/java/tomcat/apache-tomcat-9.0.14/webapps/MysqlBackup/"+fileName+".sql";
     }
 }

@@ -172,10 +172,12 @@ public class ManagerController {
                                                      @RequestParam(value = "id",required = true) int id) {
         return managerService.top10ProductApplyReject(response,id);
     }
-    @RequestMapping(value="/api/m/mysql_backup",method= RequestMethod.GET)
+    //method= RequestMethod.GET
+    @RequestMapping(value="/api/m/mysql_backup")
     public void mysqlBackup(HttpServletResponse response) {
         managerService.Download(response);
     }
+
     @RequestMapping("/api/m/income/all")
     public Map<String, Object> caculate_income(HttpServletResponse response){
         return managerService.caculate_income(response);
