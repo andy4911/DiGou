@@ -173,7 +173,7 @@ public class ManagerController {
         return managerService.top10ProductApplyReject(response,id);
     }
     //method= RequestMethod.GET
-    @RequestMapping(value="/api/m/mysql_backup")
+    @RequestMapping("/api/m/mysql_backup")
     public void mysqlBackup(HttpServletResponse response) {
         managerService.Download(response);
     }
