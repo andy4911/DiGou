@@ -55,5 +55,12 @@ public class OrderController {
     public Map<String, Object> confirm(HttpServletResponse response, 
             @RequestParam(value = "orderID", required = true) int orderID){
     	return orderService.confirm(orderID);
-    } 
+    }
+    @RequestMapping("/api/c/search_order_by_time")
+    public Map<String,Object> searchOrderByTime(HttpServletResponse response,
+                                                @RequestParam(value  = "cid",required = true) int cid ,
+                                                @RequestParam(value  = "start",required = true) long start ,
+                                                @RequestParam(value  = "end",required = true) long end ){
+        return orderService.searchOrderByTime(response,cid,start,end);
+    }
 }

@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <!-- 指定工作空间，要与接口名相同，源代码没有去看，猜测应该是通过"这里的namespace.下边方法的id"来定位方法的 -->  
-<mapper namespace="com.digou.mapper.OrderMapper">  
+<mapper namespace="com.digou.mapper.OrderMapper">
+
+
+	<resultMap id="OrderMap1" type="com.digou.entity.Order">
+		<result column="orId" jdbcType="INTEGER" property="orderID"/>
+		<result column="cID" jdbcType="INTEGER" property="cID" />
+		<result column="pID" jdbcType="INTEGER" property="pID" />
+		<result column="createTime" jdbcType="INTEGER" property="createTime" />
+		<result column="Price" jdbcType="REAL" property="orderPrice" />
+		<result column="isFinish" jdbcType="INTEGER" property="isFinish" />
+		<result column="amount" jdbcType="INTEGER" property="amount" />
+		<result column="adminProfit" jdbcType="REAL" property="adminProfit" />
+		<result column="shopName" jdbcType="CHAR" property="shopName"/>
+		<result column="pName" jdbcType="CHAR" property="pName"/>
+		<result column="pUrl" jdbcType="CHAR" property="portraitURL"/>
+		<result column="cname" jdbcType="CHAR" property="cName"/>
+		<result column="sellerName" jdbcType="CHAR" property="sellerName"/>
+	</resultMap>
+
+
+	<select id="searchOrderByTime"  resultMap="OrderMap1">
+		SELECT OrderForm.orderID AS orId , OrderForm.cID AS cID,  OrderForm.pID AS pID, OrderForm.orderPrice AS Price,
+		 OrderForm.createTime AS createTime,OrderForm.amount AS  amount, OrderForm.isFinish AS isFinish,
+		 OrderForm.adminProfit AS adminProfit,  Seller_User.shopName AS shopName, Product.pName AS pName,
+         Product.portraitURL AS pUrl, CUser.nickname AS cname,Seller_User.nickname AS sellerName
+        FROM  (OrderForm LEFT JOIN Product ON (OrderForm.pID =Product.pID) LEFT JOIN Seller_User ON ( Product.sID = Seller_User.id) )LEFT JOIN CUser ON ( OrderForm.cID = CUser.userID) WHERE  (createTime BETWEEN #{start} AND #{end} )AND OrderForm.cID= #{cid}
+	</select>
 
 	<insert id="insert" parameterType="com.digou.entity.Order" useGeneratedKeys="true" keyProperty="orderID">
 		INSERT INTO OrderForm (orderID, cID, pID, createTime, orderPrice, amount, adminProfit, commented,isFinish)

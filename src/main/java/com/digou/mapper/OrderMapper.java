@@ -19,5 +19,6 @@ public interface OrderMapper {
 	public ArrayList<Order> findWithinTime(int cID, long begin, long end);
 	
 	public int updateCommented(int status, int orderID);
+	ArrayList<Order>  searchOrderByTime( int cid,long start,long end);
 }
 
