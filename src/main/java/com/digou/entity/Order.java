@@ -24,10 +24,11 @@ public class Order extends BaseEntity {
 	public String shopName;
 	public String sellerName;
 	/** isFinissh
-	 * 1 未发货
+	 * 1 付款 未发货
 	 * 0 订单失败（退款）
 	 * 3 已发货
 	 * 2 订单完成（交易成功）
+	 * 4 未付款
 	 */
 	public int   isFinish;
 	/** isDelete
